@@ -1,17 +1,28 @@
 # frozen_string_literal: true
 
 module Zyra
+  # @api private
+  # @author Darthjee
+  #
+  # Wrapper responsible for setting attributes on a model
   class Setter
+    # @param model [Object] model to be set
     def initialize(model)
       @model = model
     end
 
-    def name(value)
-      @model.name = value
-    end
-
     private
 
+    # Method called for every attribute to be set
+    #
+    # Since none of those attributes have been defined, the call
+    # always falls under method missing
+    #
+    # The method call is always directed to the model
+    #
+    # @param method_name [Symbol] attribute to be set or method to be called
+    #   on the model
+    # @param args [Array] arguments to be sent to the method call
     def method_missing(method_name, *args, &block)
       return super unless @model.respond_to?("#{method_name}=")
 
