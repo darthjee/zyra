@@ -6,4 +6,6 @@ require 'sinclair'
 # @author darthjee
 module Zyra
   autoload :VERSION, 'zyra/version'
+
+  autoload :Builder, 'zyra/builder'
 end
