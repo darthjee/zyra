@@ -13,6 +13,8 @@ module Zyra
     private
 
     def method_missing(method_name, *args, &block)
+      return super unless @model.respond_to?("#{method_name}=")
+
       @model.public_send("#{method_name}=", *args, &block)
     end
 
