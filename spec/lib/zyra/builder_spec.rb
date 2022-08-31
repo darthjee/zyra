@@ -20,5 +20,15 @@ describe Zyra::Builder do
           .to eq(name)
       end
     end
+
+    context 'when a block is given' do
+      let(:name) { SecureRandom.hex(10) }
+
+      it 'initializes the model with the given attribute' do
+        value = name
+        expect(builder.build { |setter| setter.name value }.name)
+          .to eq(name)
+      end
+    end
   end
 end

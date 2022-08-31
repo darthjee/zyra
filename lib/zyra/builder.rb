@@ -8,8 +8,10 @@ module Zyra
       @model_class = model_class
     end
 
-    def build(**attributes)
-      model_class.new(attributes)
+    def build(**attributes, &block)
+      model_class.new(attributes).tap do |model|
+        Setter.new(model).tap(&block) if block
+      end
     end
   end
 end
