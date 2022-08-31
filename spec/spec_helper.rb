@@ -11,6 +11,8 @@ SimpleCov.start 'gem'
 require 'zyra'
 require 'pry-nav'
 
+require 'active_record'
+
 support_files = File.expand_path('spec/support/**/*.rb')
 
 Dir[support_files].sort.each { |file| require file }
