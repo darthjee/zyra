@@ -1,0 +1,71 @@
+version: 2
+workflows:
+  version: 2
+  test-and-build:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - build-and-release:
+          requires: [test]
+          filters:
+            tags:
+              only: /\d+\.\d+\.\d+/
+            branches:
+              only:
+                - master
+jobs:
+  test:
+    docker:
+      - image: darthjee/circleci_ruby_gems:0.5.4
+        environment:
+          PROJECT: zyra
+    steps:
+      - checkout
+      - run:
+          name: Prepare Coverage Test Report
+          command: cc-test-reporter before-build
+      - run:
+          name: Bundle Install
+          command: bundle install
+      - run:
+          name: RSpec
+          command: bundle exec rspec
+      - run:
+          name: Rubocop
+          command: rubocop
+      - run:
+          name: Coverage Test Report
+          command: cc-test-reporter after-build --exit-code $?
+      - run:
+          name: Yardstick coverage check
+          command: bundle exec rake verify_measurements
+      - run:
+          name: Check version documentation
+          command: check_readme.sh
+      - run:
+          name: Rubycritcs check
+          command: rubycritic.sh
+      - run:
+          name: Check unit tests
+          command: check_specs
+  build-and-release:
+    docker:
+      - image: darthjee/circleci_ruby_gems:0.5.4
+        environment:
+          PROJECT: zyra
+    steps:
+      - checkout
+      - run:
+          name: Bundle Install
+          command: bundle install
+      - run:
+          name: Signin
+          command: build_gem.sh signin
+      - run:
+          name: Build Gem
+          command: build_gem.sh build
+      - run:
+          name: Push Gem
+          command: build_gem.sh push

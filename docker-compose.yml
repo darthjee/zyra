@@ -1,0 +1,23 @@
+version: '3'
+services:
+  base: &base
+    image: zyra
+    working_dir: /home/app/app
+    volumes:
+      - .:/home/app/app
+
+  base_build:
+    <<: *base
+    build: .
+    command: echo done
+
+  zyra:
+    <<: *base
+    container_name: zyra
+    depends_on: [base_build]
+    command: /bin/bash -c 'rspec'
+
+  test_all:
+    <<: *base
+    depends_on: [base_build]
+    command: /bin/bash -c 'rspec && yard && rake yardstick_measure && rake verify_measurements'

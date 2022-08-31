@@ -1,0 +1,9 @@
+coverages
+pkg
+Gemfile.lock
+coverage
+doc
+.yardoc/
+measurement/
+**/*.swp
+rubycritic/
