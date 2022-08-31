@@ -21,6 +21,7 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency     'sinclair',           '>= 1.8.0'
 
+  gem.add_development_dependency 'activesupport',      '5.2.8.1'
   gem.add_development_dependency 'bundler',            '2.3.20'
   gem.add_development_dependency 'pry',                '0.14.1'
   gem.add_development_dependency 'pry-nav',            '1.0.0'
