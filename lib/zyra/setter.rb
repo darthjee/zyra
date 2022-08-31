@@ -15,5 +15,9 @@ module Zyra
     def method_missing(method_name, *args, &block)
       @model.public_send("#{method_name}=", *args, &block)
     end
+
+    def respond_to_missing?(*args)
+      super || @model.send(:respond_to_missing?, *args)
+    end
   end
 end
