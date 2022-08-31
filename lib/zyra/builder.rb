@@ -8,7 +8,8 @@ module Zyra
       @model_class = model_class
     end
 
-    def build(*attributes)
+    def build(**attributes)
+      model_class.new(attributes)
     end
   end
 end

@@ -3,7 +3,22 @@
 require 'spec_helper'
 
 describe Zyra::Builder do
-  subject(:builder) { builder_class.new(model_class) }
+  subject(:builder) { described_class.new(model_class) }
 
-  let(:model_class) { }
+  let(:model_class) { User }
+
+  describe '#build' do
+    it do
+      expect(builder.build).to be_a(model_class)
+    end
+
+    context 'when attributes are given' do
+      let(:name) { SecureRandom.hex(10) }
+
+      it 'initializes the model with the given attribute' do
+        expect(builder.build(name: name).name)
+          .to eq(name)
+      end
+    end
+  end
 end
