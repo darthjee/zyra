@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require 'sinclair'
+
 # @api public
 # @author darthjee
-class Zyra
+module Zyra
   autoload :VERSION, 'zyra/version'
 end
