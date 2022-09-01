@@ -5,6 +5,9 @@ require 'jace'
 
 # @api public
 # @author darthjee
+#
+# Zyra allows builders to be registered to ease up
+# seeding
 module Zyra
   autoload :VERSION, 'zyra/version'
 
@@ -13,8 +16,36 @@ module Zyra
   autoload :Registry,   'zyra/registry'
 
   class << self
+    # @method .register
+    # @api public
+    #
+    # Register a new builder
+    #
+    # The builder will focus on one class and be registered under a
+    # symbol key
+    #
+    # @param klass [Class] Model class to be used by the builder
+    #
+    # @overload register(klass)
+    #   When the key is not provided, it is infered from the class name
+    #
+    # @overload register(klass, key)
+    #   @param key [String,Symbol] key to be used when storyin the builder
+    #
+    # @return [Zyra::Builder] registered builder
     delegate :register, to: :registry
 
+    # Register a handler on a certain event
+    #
+    # Possible events are +build+, +create+
+    #
+    # @param key [String,Symbol] key under which the {Builder builder}
+    #   is {Registry registered}
+    # @param (see Builder#after)
+    #
+    # @yield [Object] the model built
+    #
+    # @return (see Builder#after)
     def after(key, event, &block)
       builder_for(key).after(event, &block)
     end
@@ -26,6 +57,7 @@ module Zyra
     # @param (see Builder#build)
     #
     # @yield (see Builder#build)
+    #
     # @return (see Builder#build)
     #
     # @see .register
@@ -61,10 +93,25 @@ module Zyra
 
     private
 
+    # @private
+    # @api private
+    #
+    # Returns a registered builder for a key
+    #
+    # @param key [String,Symbol] key under which the {Builder builder}
+    #   is {Registry registered}
+    #
+    # @return [Builder]
     def builder_for(key)
       registry.builder_for(key) || raise(Exceptions::BuilderNotRegistered)
     end
 
+    # @private
+    # @api private
+    #
+    # Returns the registry containing all the builders
+    #
+    # @return [Registry]
     def registry
       @registry ||= Registry.new
     end
