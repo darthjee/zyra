@@ -5,21 +5,7 @@ module Zyra
   #
   # Registry of all registered builders
   class Registry
-    # @api public
-    # Register a new builder
-    #
-    # The builder will focus on one class and be registered under a
-    # symbol key
-    #
-    # @param klass [Class] Model class to be used by the builder
-    #
-    # @overload register(klass)
-    #   When the key is not provided, it is infered from the class name
-    #
-    # @overload register(klass, key)
-    #   @param key [String,Symbol] key to be used when storyin the builder
-    #
-    # @return [Zyra::Builder] registered builder
+    # (see Zyra.register)
     def register(klass, key = klass.name.gsub(/::([A-Z])/, '_\1').downcase)
       registry[key.to_sym] = Builder.new(klass)
     end
