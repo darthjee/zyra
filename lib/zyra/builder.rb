@@ -19,6 +19,8 @@ module Zyra
     # will be set
     #
     # @yield [Setter] Setter wrapping model
+    #
+    # @return [Object] an instance of {#model_class model_class}
     def build(**attributes, &block)
       block ||= proc {}
       model_class.new(attributes).tap(&block)
