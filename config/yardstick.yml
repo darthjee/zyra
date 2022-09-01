@@ -15,10 +15,21 @@ rules:
     exclude: []
   ExampleTag:
     enabled: true
-    exclude: []
+    exclude:
+      - Zyra.register
+      - Zyra.after
+      - Zyra.build
+      - Zyra.create
+      - Zyra::Builder#after
+      - Zyra::Builder#build
+      - Zyra::Builder#create
+      - Zyra::Registry#register
   ReturnTag:
     enabled: true
-    exclude: []
+    exclude:
+      - Zyra.after
+      - Zyra.build
+      - Zyra.create
   Summary::Presence:
     enabled: true
     exclude:
