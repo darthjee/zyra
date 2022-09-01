@@ -128,4 +128,29 @@ describe Zyra do
       end
     end
   end
+
+  describe '.after' do
+    let(:model_class) { User }
+    let(:key)         { :user }
+    let(:name)        { SecureRandom.hex(10) }
+
+    context 'when a builder has been registered' do
+      before do
+        described_class.register(model_class)
+      end
+
+      it 'register a handler to be ran after an event' do
+        value = name
+
+        expect { described_class.after(key, :build) { |model| model.name = value } }
+          .to change { described_class.build(key).name }
+          .from(nil).to(name)
+      end
+
+      it do
+        expect(described_class.after(key, :build) {})
+          .to be_a(Zyra::Builder)
+      end
+    end
+  end
 end
