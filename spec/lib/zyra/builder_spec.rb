@@ -30,5 +30,36 @@ describe Zyra::Builder do
           .to eq(name)
       end
     end
+
+    context 'when building has an after build handler' do
+      let(:name) { SecureRandom.hex(10) }
+
+      before do
+        value = name
+        builder.after(:build) { |model| model.name = value }
+      end
+
+      it 'runs the event handler' do
+        expect(builder.build.name)
+          .to eq(name)
+      end
+    end
+  end
+
+  describe '#after' do
+    let(:name) { SecureRandom.hex(10) }
+
+    it 'register a handler to be ran after an event' do
+      value = name
+
+      expect { builder.after(:build) { |model| model.name = value } }
+        .to change { builder.build.name }
+        .from(nil).to(name)
+    end
+
+    it do
+      expect(builder.after(:build) {})
+        .to be(builder)
+    end
   end
 end

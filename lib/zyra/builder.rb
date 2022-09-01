@@ -30,7 +30,7 @@ module Zyra
     end
 
     def after(event, &block)
-      event_registry.register(event, &block)
+      tap { event_registry.register(event, &block) }
     end
 
     # Checks if another builder is equal to the current builder
