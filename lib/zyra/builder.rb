@@ -6,8 +6,6 @@ module Zyra
   #
   # Class responsible for building a model
   class Builder
-    attr_reader :model_class
-
     # @param model_class [Class] Model class to be initialized
     #   into a model
     def initialize(model_class)
@@ -25,5 +23,16 @@ module Zyra
       block ||= proc {}
       model_class.new(attributes).tap(&block)
     end
+
+    private
+
+    # @method model_class
+    # @private
+    # @api private
+    #
+    # Model class to be initialized into a model
+    #
+    # @return [Class]
+    attr_reader :model_class
   end
 end
