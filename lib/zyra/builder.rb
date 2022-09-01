@@ -31,7 +31,11 @@ module Zyra
     end
 
     def create(**attributes, &block)
-      build(**attributes, &block).tap(&:save)
+      model = build(**attributes, &block)
+
+      event_registry.trigger(:create, model) do
+        model.tap(&:save)
+      end
     end
 
     # @api public

@@ -85,12 +85,27 @@ describe Zyra::Builder do
 
       before do
         value = name
-        builder.after(:build) { |model| model.name = value }
+        builder.after(:build) { |model| model.name = "#{value}#{model.id}" }
       end
 
       it 'runs the event handler' do
         expect(builder.create.name)
           .to eq(name)
+      end
+    end
+
+    context 'when building has an after create handler' do
+      let(:name) { SecureRandom.hex(10) }
+
+      before do
+        value = name
+        builder.after(:create) { |model| model.name = "#{value}#{model.id}" }
+      end
+
+      it 'runs the event handler' do
+        model = builder.create
+        expect(model.name)
+          .to eq("#{name}#{model.id}")
       end
     end
   end
