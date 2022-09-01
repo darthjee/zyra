@@ -47,6 +47,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Bundle Install
+          command: bundle install
+      - run:
           name: Rubocop
           command: rubocop
       - run:
