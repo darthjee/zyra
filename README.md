@@ -1,4 +1,4 @@
-Jace
+Zyra
 ====
 [![Code Climate](https://codeclimate.com/github/darthjee/zyra/badges/gpa.svg)](https://codeclimate.com/github/darthjee/zyra)
 [![Test Coverage](https://codeclimate.com/github/darthjee/zyra/badges/coverage.svg)](https://codeclimate.com/github/darthjee/zyra/coverage)
