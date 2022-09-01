@@ -23,7 +23,14 @@ module Zyra
     # @return [Object] an instance of {#model_class model_class}
     def build(**attributes, &block)
       block ||= proc {}
-      model_class.new(attributes).tap(&block)
+
+      model_class.new(attributes).tap(&block).tap do |model|
+        event_registry.trigger(:build, model)
+      end
+    end
+
+    def after(event, &block)
+      event_registry.register(event, &block)
     end
 
     # Checks if another builder is equal to the current builder
@@ -49,5 +56,9 @@ module Zyra
     #
     # @return [Class]
     attr_reader :model_class
+
+    def event_registry
+      @event_registry ||= Jace::Registry.new
+    end
   end
 end
