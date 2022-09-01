@@ -106,7 +106,8 @@ describe Zyra do
 
         it 'initializes the model with the given attribute' do
           value = name
-          expect(described_class.create(key) { |model| model.name = value }.name)
+          model = described_class.create(key) { |mdl| mdl.name = value }
+          expect(model.name)
             .to eq(name)
         end
       end
@@ -142,7 +143,7 @@ describe Zyra do
       it 'register a handler to be ran after an event' do
         value = name
 
-        expect { described_class.after(key, :build) { |model| model.name = value } }
+        expect { described_class.after(key, :build) { |m| m.name = value } }
           .to change { described_class.build(key).name }
           .from(nil).to(name)
       end
