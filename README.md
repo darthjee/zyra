@@ -11,7 +11,7 @@ Zyra
 
 Yard Documentation
 -------------------
-[https://www.rubydoc.info/gems/zyra/0.0.1](https://www.rubydoc.info/gems/zyra/0.0.1)
+[https://www.rubydoc.info/gems/zyra/0.0.2](https://www.rubydoc.info/gems/zyra/0.0.2)
 
 Installation
 ---------------
