@@ -8,5 +8,4 @@ module Zyra
   autoload :VERSION, 'zyra/version'
 
   autoload :Builder, 'zyra/builder'
-  autoload :Setter,  'zyra/setter'
 end

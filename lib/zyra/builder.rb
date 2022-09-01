@@ -22,9 +22,8 @@ module Zyra
     #
     # @yield [Setter] Setter wrapping model
     def build(**attributes, &block)
-      model_class.new(attributes).tap do |model|
-        Setter.new(model).tap(&block) if block
-      end
+      block ||= proc {}
+      model_class.new(attributes).tap(&block)
     end
   end
 end
