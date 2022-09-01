@@ -21,7 +21,8 @@ rules:
     exclude: []
   Summary::Presence:
     enabled: true
-    exclude: []
+    exclude:
+      - Zyra::Builder#initialize
   Summary::Length:
     enabled: true
     exclude: []

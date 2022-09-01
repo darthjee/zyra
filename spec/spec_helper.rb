@@ -11,6 +11,11 @@ SimpleCov.start 'gem'
 require 'zyra'
 require 'pry-nav'
 
+require 'active_record'
+ActiveRecord::Base.establish_connection(
+  adapter: 'sqlite3', database: ':memory:'
+)
+
 support_files = File.expand_path('spec/support/**/*.rb')
 
 Dir[support_files].sort.each { |file| require file }
