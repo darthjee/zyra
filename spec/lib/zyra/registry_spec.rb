@@ -16,6 +16,12 @@ describe Zyra::Registry do
         .to eq(Zyra::Builder.new(User))
     end
 
+    it 'register builder under the key' do
+      expect { registry.register(User, as: :user) }
+        .to change { registry.builder_for(:user) }
+        .from(nil).to(Zyra::Builder.new(User))
+    end
+
     context 'when not providing an alias' do
       it do
         expect(registry.register(User))
@@ -25,6 +31,12 @@ describe Zyra::Registry do
       it 'creates a builder for the given class' do
         expect(registry.register(User))
           .to eq(Zyra::Builder.new(User))
+      end
+
+      it 'register builder under the correct key' do
+        expect { registry.register(User) }
+          .to change { registry.builder_for(:user) }
+          .from(nil).to(Zyra::Builder.new(User))
       end
     end
   end
