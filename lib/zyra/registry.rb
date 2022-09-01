@@ -36,7 +36,7 @@ module Zyra
 
     private
 
-    # @aprivate
+    # @private
     #
     # Registry store for all builders
     #
