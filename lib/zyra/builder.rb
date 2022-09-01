@@ -30,6 +30,14 @@ module Zyra
       end
     end
 
+    def create(**attributes, &block)
+      model = build(**attributes, &block)
+
+      event_registry.trigger(:create, model) do
+        model.tap(&:save)
+      end
+    end
+
     # @api public
     # Register a handler on a certain event
     #
