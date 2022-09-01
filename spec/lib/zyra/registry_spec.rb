@@ -64,7 +64,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a symbol key' do
       before do
-        expect(registry.register(User, as: :user))
+        registry.register(User, as: :user)
       end
 
       it do
@@ -84,7 +84,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a string key' do
       before do
-        expect(registry.register(User, as: 'user'))
+        registry.register(User, as: 'user')
       end
 
       it do
