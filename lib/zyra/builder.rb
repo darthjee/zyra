@@ -13,15 +13,15 @@ module Zyra
     end
 
     # @api public
-    # Builds an instance of model_class
+    # Builds an instance of the registered model class
     #
     # @param attributes [Hash] attributes to be set in the model
     # @param block [Proc] block to be ran after where more attributes
     # will be set
     #
-    # @yield [Setter] Setter wrapping model
+    # @yield [Object] Instance of the model class
     #
-    # @return [Object] an instance of {#model_class model_class}
+    # @return [Object] an instance of model class
     def build(**attributes, &block)
       block ||= proc {}
 
@@ -30,6 +30,14 @@ module Zyra
       end
     end
 
+    # @api public
+    # Creates an instance of the registered model class
+    #
+    # This behaves like {#build}, but persists the entry
+    #
+    # @param (see #build)
+    # @yield (see #build)
+    # @return (see #build)
     def create(**attributes, &block)
       model = build(**attributes, &block)
 
