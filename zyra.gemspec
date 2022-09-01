@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.test_files            = gem.files.grep(%r{^(test|gem|features)/})
   gem.require_paths         = ['lib']
 
+  gem.add_runtime_dependency     'jace',               '>= 0.1.1'
   gem.add_runtime_dependency     'sinclair',           '>= 1.8.0'
 
   gem.add_development_dependency 'activerecord',       '5.2.8.1'
