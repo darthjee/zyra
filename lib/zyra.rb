@@ -10,4 +10,22 @@ module Zyra
 
   autoload :Builder,  'zyra/builder'
   autoload :Registry, 'zyra/registry'
+
+  class << self
+    delegate :register, :builder_for, to: :registry
+
+    def after(key, event, &block)
+      builder_for(key).after(event, &block)
+    end
+
+    def build(key, **attributes, &block)
+      builder_for(key).build(**attributes, &block)
+    end
+
+    private
+
+    def registry
+      @registry ||= Registry.new
+    end
+  end
 end
