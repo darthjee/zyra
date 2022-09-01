@@ -10,12 +10,12 @@ describe Zyra::Registry do
       let(:key) { :user_alias }
 
       it 'creates a builder for the given class' do
-        expect(registry.register(User, as: key))
+        expect(registry.register(User, key))
           .to eq(Zyra::Builder.new(User))
       end
 
       it 'register builder under the key' do
-        expect { registry.register(User, as: key) }
+        expect { registry.register(User, key) }
           .to change { registry.builder_for(key) }
           .from(nil).to(Zyra::Builder.new(User))
       end
@@ -25,12 +25,12 @@ describe Zyra::Registry do
       let(:key) { 'user' }
 
       it 'creates a builder for the given class' do
-        expect(registry.register(User, as: key))
+        expect(registry.register(User, key))
           .to eq(Zyra::Builder.new(User))
       end
 
       it 'register builder under the key' do
-        expect { registry.register(User, as: key) }
+        expect { registry.register(User, key) }
           .to change { registry.builder_for(key) }
           .from(nil).to(Zyra::Builder.new(User))
       end
@@ -64,7 +64,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a symbol key' do
       before do
-        registry.register(User, as: :user)
+        registry.register(User, :user)
       end
 
       it do
@@ -84,7 +84,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a string key' do
       before do
-        registry.register(User, as: 'user')
+        registry.register(User, 'user')
       end
 
       it do
