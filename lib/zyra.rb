@@ -8,12 +8,9 @@ require 'jace'
 module Zyra
   autoload :VERSION, 'zyra/version'
 
-  autoload :Builder,  'zyra/builder'
-  autoload :Registry, 'zyra/registry'
-
-  module Exceptions
-    class BuilderNotRegistered < StandardError; end
-  end
+  autoload :Builder,    'zyra/builder'
+  autoload :Exceptions, 'zyra/exceptions'
+  autoload :Registry,   'zyra/registry'
 
   class << self
     delegate :register, to: :registry
