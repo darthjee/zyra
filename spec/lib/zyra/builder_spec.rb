@@ -26,7 +26,7 @@ describe Zyra::Builder do
 
       it 'initializes the model with the given attribute' do
         value = name
-        expect(builder.build { |model| model.name= value }.name)
+        expect(builder.build { |model| model.name = value }.name)
           .to eq(name)
       end
     end
