@@ -3,15 +3,24 @@
 require 'spec_helper'
 
 describe Zyra do
+  before { described_class.reset }
+
   describe '.build' do
     let(:model_class) { User }
     let(:key)         { :user }
 
-    before do
-      described_class.register(model_class)
+    context 'when a builder has not been registered' do
+      it do
+        expect { described_class.build(key) }
+          .to raise_error(Zyra::Exceptions::BuilderNotRegistered)
+      end
     end
 
     context 'when a builder has been registered' do
+      before do
+        described_class.register(model_class)
+      end
+
       it do
         expect(described_class.build(key)).to be_a(model_class)
       end
@@ -62,11 +71,18 @@ describe Zyra do
     let(:model_class) { User }
     let(:key)         { :user }
 
-    before do
-      described_class.register(model_class)
+    context 'when a builder has not been registered' do
+      it do
+        expect { described_class.create(key) }
+          .to raise_error(Zyra::Exceptions::BuilderNotRegistered)
+      end
     end
 
     context 'when a builder has been registered' do
+      before do
+        described_class.register(model_class)
+      end
+
       it do
         expect(described_class.create(key)).to be_a(model_class)
       end

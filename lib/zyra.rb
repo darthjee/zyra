@@ -11,8 +11,12 @@ module Zyra
   autoload :Builder,  'zyra/builder'
   autoload :Registry, 'zyra/registry'
 
+  module Exceptions
+    class BuilderNotRegistered < StandardError; end
+  end
+
   class << self
-    delegate :register, :builder_for, to: :registry
+    delegate :register, to: :registry
 
     def after(key, event, &block)
       builder_for(key).after(event, &block)
@@ -26,7 +30,15 @@ module Zyra
       builder_for(key).create(**attributes, &block)
     end
 
+    def reset
+      @registry = nil
+    end
+
     private
+
+    def builder_for(key)
+      registry.builder_for(key) || fail(Exceptions::BuilderNotRegistered)
+    end
 
     def registry
       @registry ||= Registry.new
