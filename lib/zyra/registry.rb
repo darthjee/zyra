@@ -5,6 +5,7 @@ module Zyra
   #
   # Registry of all registered builders
   class Registry
+    # @api public
     # Register a new builder
     #
     # The builder will focus on one class and be registered under a
