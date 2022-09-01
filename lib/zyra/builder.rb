@@ -12,6 +12,7 @@ module Zyra
       @model_class = model_class
     end
 
+    # @api public
     # Builds an instance of model_class
     #
     # @param attributes [Hash] attributes to be set in the model
@@ -23,7 +24,23 @@ module Zyra
     # @return [Object] an instance of {#model_class model_class}
     def build(**attributes, &block)
       block ||= proc {}
-      model_class.new(attributes).tap(&block)
+
+      model_class.new(attributes).tap(&block).tap do |model|
+        event_registry.trigger(:build, model)
+      end
+    end
+
+    # @api public
+    # Register a handler on a certain event
+    #
+    # Possible events are +build+, +create+
+    #
+    # @param event [Symbol,String] event to be watched.
+    # @param block [Proc] block to be executed when the event is called
+    #
+    # @return [Builder] the builder itself
+    def after(event, &block)
+      tap { event_registry.register(event, &block) }
     end
 
     # Checks if another builder is equal to the current builder
@@ -42,12 +59,23 @@ module Zyra
     protected
 
     # @method model_class
-    # @protected
     # @api private
     #
     # Model class to be initialized into a model
     #
     # @return [Class]
     attr_reader :model_class
+
+    # @private
+    #
+    # Event registry
+    #
+    # The event registry will contain all handlers for
+    # post build or creating events
+    #
+    # @return [Jace::Registry]
+    def event_registry
+      @event_registry ||= Jace::Registry.new
+    end
   end
 end
