@@ -30,6 +30,10 @@ module Zyra
       end
     end
 
+    def create(**attributes, &block)
+      build(**attributes, &block).tap(&:save)
+    end
+
     # @api public
     # Register a handler on a certain event
     #
