@@ -22,6 +22,10 @@ module Zyra
       builder_for(key).build(**attributes, &block)
     end
 
+    def create(key, **attributes, &block)
+      builder_for(key).create(**attributes, &block)
+    end
+
     private
 
     def registry
