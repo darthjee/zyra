@@ -7,5 +7,6 @@ require 'sinclair'
 module Zyra
   autoload :VERSION, 'zyra/version'
 
-  autoload :Builder, 'zyra/builder'
+  autoload :Builder,  'zyra/builder'
+  autoload :Registry, 'zyra/registry'
 end
