@@ -1,2 +1,3 @@
 ignore:
   - lib/zyra/version.rb
+  - lib/zyra/exceptions.rb
