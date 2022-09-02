@@ -10,6 +10,7 @@ SimpleCov.start 'gem'
 
 require 'zyra'
 require 'pry-nav'
+require 'factory_bot'
 
 require 'active_record'
 ActiveRecord::Base.establish_connection(

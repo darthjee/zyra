@@ -13,6 +13,7 @@ module Zyra
 
   autoload :Builder,    'zyra/builder'
   autoload :Exceptions, 'zyra/exceptions'
+  autoload :Finder,     'zyra/finder'
   autoload :Registry,   'zyra/registry'
 
   class << self
@@ -24,13 +25,13 @@ module Zyra
     # The builder will focus on one class and be registered under a
     # symbol key
     #
-    # @param klass [Class] Model class to be used by the builder
-    #
     # @overload register(klass)
     #   When the key is not provided, it is infered from the class name
+    #   @param klass [Class] Model class to be used by the builder
     #
     # @overload register(klass, key)
     #   @param key [String,Symbol] key to be used when storyin the builder
+    #   @param klass [Class] Model class to be used by the builder
     #
     # @return [Zyra::Builder] registered builder
     delegate :register, to: :registry

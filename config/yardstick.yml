@@ -24,6 +24,7 @@ rules:
       - Zyra::Builder#build
       - Zyra::Builder#create
       - Zyra::Registry#register
+      - Zyra::Finder#after
   ReturnTag:
     enabled: true
     exclude:
@@ -34,6 +35,7 @@ rules:
     enabled: true
     exclude:
       - Zyra::Builder#initialize
+      - Zyra::Finder#initialize
   Summary::Length:
     enabled: true
     exclude: []
