@@ -65,5 +65,33 @@ describe Zyra::Finder do
         expect(finder.find(attributes)).to eq(user)
       end
     end
+
+    context 'when there is an event handler' do
+      let(:name) { 'new_name' }
+
+      before do
+        new_name = name
+
+        finder.after(:found) do |model|
+          model.update(name: new_name)
+        end
+      end
+
+      context 'when the model is found' do
+        let!(:user) { create(:user, **attributes) }
+
+        it 'runs the event after the model was found' do
+          expect { finder.find(attributes) }
+            .to change { user.reload.name }
+            .to(name)
+        end
+      end
+
+      context 'when the model is not found' do
+        it do
+          expect(finder.find(attributes)).to be_nil
+        end
+      end
+    end
   end
 end

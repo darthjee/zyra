@@ -27,7 +27,11 @@ module Zyra
         keys.include?(attribute)
       end
 
-      model_class.find_by(**query)
+      model_class.find_by(**query).tap do |model|
+        return unless model
+
+        event_registry.trigger(:found, model)
+      end
     end
 
     # @api public
