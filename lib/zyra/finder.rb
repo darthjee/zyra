@@ -8,9 +8,15 @@ module Zyra
   class Finder
     def initialize(model_class, keys)
       @model_class = model_class
+      @keys = [keys].flatten
     end
 
     def find(**attributes)
+      query = attributes.select do |k, v|
+        keys.include?(k)
+      end
+
+      model_class.find_by(**query)
     end
 
     # @api public
@@ -49,7 +55,7 @@ module Zyra
     # Model class to be initialized into a model
     #
     # @return [Class]
-    attr_reader :model_class
+    attr_reader :model_class, :keys
 
     # @private
     #

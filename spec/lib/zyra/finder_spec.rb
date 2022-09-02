@@ -25,12 +25,27 @@ describe Zyra::Finder do
     end
 
     context 'when the entry is there with the same attributes' do
+      let!(:user) { create(:user, **attributes) }
+
+      it 'returns the user' do
+        expect(finder.find(attributes)).to eq(user)
+      end
     end
 
     context 'when the entry is there with other attributes' do
+      let!(:user) { create(:user, email: email) }
+
+      it 'returns the user' do
+        expect(finder.find(attributes)).to eq(user)
+      end
     end
 
     context 'when there is another entry' do
+      let!(:user) { create(:user) }
+
+      it 'returns the user' do
+        expect(finder.find(attributes)).to be_nil
+      end
     end
   end
 end
