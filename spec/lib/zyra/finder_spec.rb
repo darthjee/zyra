@@ -41,7 +41,7 @@ describe Zyra::Finder do
     end
 
     context 'when there is another entry' do
-      let!(:user) { create(:user) }
+      before { create(:user) }
 
       it 'returns the user' do
         expect(finder.find(attributes)).to be_nil
