@@ -47,5 +47,23 @@ describe Zyra::Finder do
         expect(finder.find(attributes)).to be_nil
       end
     end
+
+    context 'when the keys is set as string' do
+      let(:keys)  { 'email' }
+      let!(:user) { create(:user, **attributes) }
+
+      it 'finds the user the same way' do
+        expect(finder.find(attributes)).to eq(user)
+      end
+    end
+
+    context 'when the attributes have string keys' do
+      let(:attributes) { { 'email' => email } }
+      let!(:user)      { create(:user, **attributes) }
+
+      it 'finds the user the same way' do
+        expect(finder.find(attributes)).to eq(user)
+      end
+    end
   end
 end

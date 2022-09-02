@@ -8,12 +8,12 @@ module Zyra
   class Finder
     def initialize(model_class, keys)
       @model_class = model_class
-      @keys = [keys].flatten
+      @keys = [keys].flatten.map(&:to_sym)
     end
 
-    def find(**attributes)
-      query = attributes.select do |k, v|
-        keys.include?(k)
+    def find(attributes)
+      query = attributes.symbolize_keys.select do |attribute, _value|
+        keys.include?(attribute)
       end
 
       model_class.find_by(**query)
@@ -55,6 +55,13 @@ module Zyra
     # Model class to be initialized into a model
     #
     # @return [Class]
+
+    # @method keys
+    # @api private
+    #
+    # Keys used when finding a model
+    #
+    # @return Array[Symbol]
     attr_reader :model_class, :keys
 
     # @private
