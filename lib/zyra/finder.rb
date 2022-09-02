@@ -6,11 +6,22 @@ module Zyra
   #
   # Class responsible for finding a model in the DB
   class Finder
+    # @param model_class [Class] Model class that does the ORM
+    # @param keys [Array<Symbol,String>] keys used when searching
+    #   for the entry
     def initialize(model_class, keys)
       @model_class = model_class
       @keys = [keys].flatten.map(&:to_sym)
     end
 
+    # Search the entry in the database
+    #
+    # The query is done using part of the expected
+    # attributes filtered by the configured keys}
+    #
+    # @param attributes [Hash] expected model attribiutes
+    #
+    # @return [Object] the model from the database
     def find(attributes)
       query = attributes.symbolize_keys.select do |attribute, _value|
         keys.include?(attribute)
@@ -61,7 +72,7 @@ module Zyra
     #
     # Keys used when finding a model
     #
-    # @return Array[Symbol]
+    # @return [Array<Symbol>]
     attr_reader :model_class, :keys
 
     # @private
