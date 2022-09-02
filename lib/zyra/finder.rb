@@ -23,15 +23,10 @@ module Zyra
     #
     # @return [Object] the model from the database
     def find(attributes)
-      query = attributes.symbolize_keys.select do |attribute, _value|
-        keys.include?(attribute)
-      end
+      model = find_by(attributes)
+      return unless model
 
-      model_class.find_by(**query).tap do |model|
-        return unless model
-
-        event_registry.trigger(:found, model)
-      end
+      event_registry.trigger(:found, model) { model }
     end
 
     # @api public
@@ -89,6 +84,18 @@ module Zyra
     # @return [Jace::Registry]
     def event_registry
       @event_registry ||= Jace::Registry.new
+    end
+
+    def query_from(attributes)
+      attributes.symbolize_keys.select do |attribute, _value|
+        keys.include?(attribute)
+      end
+    end
+
+    def find_by(attributes)
+      query = query_from(attributes)
+
+      model_class.find_by(**query)
     end
   end
 end
