@@ -13,6 +13,7 @@ module Zyra
 
   autoload :Builder,    'zyra/builder'
   autoload :Exceptions, 'zyra/exceptions'
+  autoload :Finder,     'zyra/finder'
   autoload :Registry,   'zyra/registry'
 
   class << self
