@@ -19,15 +19,16 @@ module Zyra
     # The query is done using part of the expected
     # attributes filtered by the configured keys}
     #
+    # if the model is found an event is triggered
+    #
     # @param attributes [Hash] expected model attribiutes
     #
     # @return [Object] the model from the database
     def find(attributes)
-      query = attributes.symbolize_keys.select do |attribute, _value|
-        keys.include?(attribute)
-      end
+      model = find_by(attributes)
+      return unless model
 
-      model_class.find_by(**query)
+      event_registry.trigger(:found, model) { model }
     end
 
     # @api public
@@ -85,6 +86,39 @@ module Zyra
     # @return [Jace::Registry]
     def event_registry
       @event_registry ||= Jace::Registry.new
+    end
+
+    # private
+    #
+    # Extracts queriable attributes
+    #
+    # The queriable attributes are taken from the expected
+    # attributes filtered by the given keys in the Finder
+    # initialization
+    #
+    # @param (see #find)
+    #
+    # @return [Hash]
+    def query_from(attributes)
+      attributes.symbolize_keys.select do |attribute, _value|
+        keys.include?(attribute)
+      end
+    end
+
+    # @private
+    #
+    # Search the entry in the database
+    #
+    # The query is done using part of the expected
+    # attributes filtered by the configured keys}
+    #
+    # @param (see #find)
+    #
+    # @return (see #find)
+    def find_by(attributes)
+      query = query_from(attributes)
+
+      model_class.find_by(**query)
     end
   end
 end
