@@ -8,8 +8,10 @@ module Zyra
   class Builder
     # @param model_class [Class] Model class to be initialized
     #   into a model
-    def initialize(model_class)
+    # @param event_registry [Jace::Registry] event registry to handle events
+    def initialize(model_class, event_registry: Jace::Registry.new)
       @model_class = model_class
+      @event_registry = event_registry
     end
 
     # @api public
@@ -82,8 +84,8 @@ module Zyra
     # Model class to be initialized into a model
     #
     # @return [Class]
-    attr_reader :model_class
 
+    # @method event_registry
     # @private
     #
     # Event registry
@@ -92,8 +94,6 @@ module Zyra
     # post build or creating events
     #
     # @return [Jace::Registry]
-    def event_registry
-      @event_registry ||= Jace::Registry.new
-    end
+    attr_reader :model_class, :event_registry
   end
 end
