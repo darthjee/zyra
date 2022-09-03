@@ -3,11 +3,14 @@
 require 'spec_helper'
 
 describe Zyra::Finder do
-  subject(:finder) { described_class.new(model_class, keys) }
+  subject(:finder) do
+    described_class.new(model_class, keys, event_registry: event_registry)
+  end
 
-  let(:model_class) { User }
-  let(:keys)        { :email }
-  let(:email)       { SecureRandom.hex(10) }
+  let(:event_registry) { Jace::Registry.new }
+  let(:model_class)    { User }
+  let(:keys)           { :email }
+  let(:email)          { SecureRandom.hex(10) }
 
   describe '#find' do
     let(:attributes) do
@@ -72,7 +75,7 @@ describe Zyra::Finder do
       before do
         new_name = name
 
-        finder.after(:found) do |model|
+        event_registry.register(:found) do |model|
           model.update(name: new_name)
         end
       end
