@@ -9,6 +9,7 @@ module Zyra
     # @param model_class [Class] Model class that does the ORM
     # @param keys [Array<Symbol,String>] keys used when searching
     #   for the entry
+    # @param event_registry [Jace::Registry] event registry to handle events
     def initialize(model_class, keys, event_registry: Jace::Registry.new)
       @model_class = model_class
       @keys = [keys].flatten.map(&:to_sym)
