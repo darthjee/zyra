@@ -58,7 +58,8 @@ module Zyra
     def ==(other)
       return unless other.class == self.class
 
-      other.model_class == model_class
+      other.model_class == model_class &&
+        other.keys == keys
     end
 
     protected
