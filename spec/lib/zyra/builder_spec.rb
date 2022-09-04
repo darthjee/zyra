@@ -4,11 +4,11 @@ require 'spec_helper'
 
 describe Zyra::Builder do
   subject(:builder) do
-    described_class.new(model_class, event_registry: event_registry) 
+    described_class.new(model_class, event_registry: event_registry)
   end
 
   let(:event_registry) { Jace::Registry.new }
-  let(:model_class) { User }
+  let(:model_class)    { User }
 
   describe '#build' do
     it do
