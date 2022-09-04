@@ -6,8 +6,10 @@ module Zyra
   # Registry of all registered builders
   class Registry
     # (see Zyra.register)
-    def register(klass, key = klass.name.gsub(/::([A-Z])/, '_\1').downcase)
-      registry[key.to_sym] = Builder.new(klass)
+    def register(klass, key = nil, find_by:)
+      key ||= klass.name.gsub(/::([A-Z])/, '_\1').downcase
+
+      registry[key.to_sym] = FinderCreator.new(klass, find_by)
     end
 
     # Returns a registered builder
@@ -17,7 +19,7 @@ module Zyra
     # @param key [String,Symbol] key under which the builder is registered
     #
     # @return [Zyra::Builder]
-    def builder_for(key)
+    def finder_creator_for(key)
       registry[key.to_sym]
     end
 

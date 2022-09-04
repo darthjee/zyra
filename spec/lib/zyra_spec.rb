@@ -18,7 +18,7 @@ describe Zyra do
 
     context 'when a builder has been registered' do
       before do
-        described_class.register(model_class)
+        described_class.register(model_class, find_by: :email)
       end
 
       it do
@@ -80,7 +80,7 @@ describe Zyra do
 
     context 'when a builder has been registered' do
       before do
-        described_class.register(model_class)
+        described_class.register(model_class, find_by: :email)
       end
 
       it do
@@ -137,7 +137,7 @@ describe Zyra do
 
     context 'when a builder has been registered' do
       before do
-        described_class.register(model_class)
+        described_class.register(model_class, find_by: :email)
       end
 
       it 'register a handler to be ran after an event' do
@@ -150,7 +150,7 @@ describe Zyra do
 
       it do
         expect(described_class.after(key, :build) {})
-          .to be_a(Zyra::Builder)
+          .to be_a(Zyra::FinderCreator)
       end
     end
   end
