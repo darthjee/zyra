@@ -49,7 +49,7 @@ module Zyra
     #
     # @return (see Builder#after)
     def after(key, event, &block)
-      builder_for(key).after(event, &block)
+      finder_creator_for(key).after(event, &block)
     end
 
     # Builds an instance of the registered model class
@@ -65,7 +65,7 @@ module Zyra
     # @see .register
     # @see Builder#build
     def build(key, **attributes, &block)
-      builder_for(key).build(**attributes, &block)
+      finder_creator_for(key).build(**attributes, &block)
     end
 
     # Creates an instance of the registered model class
@@ -79,7 +79,7 @@ module Zyra
     # @see .register
     # @see Builder#create
     def create(key, **attributes, &block)
-      builder_for(key).create(**attributes, &block)
+      finder_creator_for(key).create(**attributes, &block)
     end
 
     # @api private
@@ -104,8 +104,8 @@ module Zyra
     #   is {Registry registered}
     #
     # @return [Builder]
-    def builder_for(key)
-      registry.builder_for(key) || raise(Exceptions::BuilderNotRegistered)
+    def finder_creator_for(key)
+      registry.finder_creator_for(key) || raise(Exceptions::BuilderNotRegistered)
     end
 
     # @private

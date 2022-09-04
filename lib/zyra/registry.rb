@@ -17,7 +17,7 @@ module Zyra
     # @param key [String,Symbol] key under which the builder is registered
     #
     # @return [Zyra::Builder]
-    def builder_for(key)
+    def finder_creator_for(key)
       registry[key.to_sym]
     end
 

@@ -16,7 +16,7 @@ describe Zyra::Registry do
 
       it 'register builder under the key' do
         expect { registry.register(User, key) }
-          .to change { registry.builder_for(key) }
+          .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
@@ -31,7 +31,7 @@ describe Zyra::Registry do
 
       it 'register builder under the key' do
         expect { registry.register(User, key) }
-          .to change { registry.builder_for(key) }
+          .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
@@ -46,18 +46,18 @@ describe Zyra::Registry do
 
       it 'register builder under the correct key' do
         expect { registry.register(User) }
-          .to change { registry.builder_for(key) }
+          .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
   end
 
-  describe '#builder_for' do
+  describe '#finder_creator_for' do
     let(:key) { :user }
 
     context 'when there is no builder registered' do
       it do
-        expect(registry.builder_for(key))
+        expect(registry.finder_creator_for(key))
           .to be_nil
       end
     end
@@ -68,7 +68,7 @@ describe Zyra::Registry do
       end
 
       it do
-        expect(registry.builder_for(key))
+        expect(registry.finder_creator_for(key))
           .to eq(Zyra::FinderCreator.new(User, []))
       end
 
@@ -76,7 +76,7 @@ describe Zyra::Registry do
         let(:key) { 'user' }
 
         it do
-          expect(registry.builder_for(key))
+          expect(registry.finder_creator_for(key))
             .to eq(Zyra::FinderCreator.new(User, []))
         end
       end
@@ -88,7 +88,7 @@ describe Zyra::Registry do
       end
 
       it do
-        expect(registry.builder_for(key))
+        expect(registry.finder_creator_for(key))
           .to eq(Zyra::FinderCreator.new(User, []))
       end
 
@@ -96,7 +96,7 @@ describe Zyra::Registry do
         let(:key) { 'user' }
 
         it do
-          expect(registry.builder_for(key))
+          expect(registry.finder_creator_for(key))
             .to eq(Zyra::FinderCreator.new(User, []))
         end
       end
