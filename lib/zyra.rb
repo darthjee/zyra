@@ -11,10 +11,11 @@ require 'jace'
 module Zyra
   autoload :VERSION, 'zyra/version'
 
-  autoload :Builder,    'zyra/builder'
-  autoload :Exceptions, 'zyra/exceptions'
-  autoload :Finder,     'zyra/finder'
-  autoload :Registry,   'zyra/registry'
+  autoload :Builder,       'zyra/builder'
+  autoload :Exceptions,    'zyra/exceptions'
+  autoload :Finder,        'zyra/finder'
+  autoload :FinderCreator, 'zyra/finder_creator'
+  autoload :Registry,      'zyra/registry'
 
   class << self
     # @method .register

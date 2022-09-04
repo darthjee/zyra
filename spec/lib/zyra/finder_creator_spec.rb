@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe Zyra::Finder do
+describe Zyra::FinderCreator do
   subject(:finder) do
-    described_class.new(model_class, keys, event_registry: event_registry)
+    described_class.new(model_class, keys)
   end
 
   let(:event_registry) { Jace::Registry.new }
@@ -12,7 +12,7 @@ describe Zyra::Finder do
   let(:keys)           { :email }
   let(:email)          { SecureRandom.hex(10) }
 
-  describe '#find' do
+  describe '#find_or_create' do
     let(:attributes) do
       {
         name: 'Some Name',
@@ -23,7 +23,12 @@ describe Zyra::Finder do
 
     context 'when there is no entry in the database' do
       it do
-        expect(finder.find(attributes)).to be_nil
+        expect(finder.find_or_create(attributes)).to be_a(model_class)
+      end
+
+      it do
+        expect { finder.find_or_create(attributes) }
+          .to change(model_class, :count)
       end
     end
 
@@ -31,7 +36,7 @@ describe Zyra::Finder do
       let!(:user) { create(:user, **attributes) }
 
       it 'returns the user' do
-        expect(finder.find(attributes)).to eq(user)
+        expect(finder.find_or_create(attributes)).to eq(user)
       end
     end
 
@@ -39,15 +44,20 @@ describe Zyra::Finder do
       let!(:user) { create(:user, email: email) }
 
       it 'returns the user' do
-        expect(finder.find(attributes)).to eq(user)
+        expect(finder.find_or_create(attributes)).to eq(user)
       end
     end
 
     context 'when there is another entry' do
       before { create(:user) }
 
-      it 'returns the user' do
-        expect(finder.find(attributes)).to be_nil
+      it 'returns a new model' do
+        expect(finder.find_or_create(attributes)).to be_a(model_class)
+      end
+
+      it do
+        expect { finder.find_or_create(attributes) }
+          .to change(model_class, :count)
       end
     end
 
@@ -56,7 +66,7 @@ describe Zyra::Finder do
       let!(:user) { create(:user, **attributes) }
 
       it 'finds the user the same way' do
-        expect(finder.find(attributes)).to eq(user)
+        expect(finder.find_or_create(attributes)).to eq(user)
       end
     end
 
@@ -65,7 +75,7 @@ describe Zyra::Finder do
       let!(:user)      { create(:user, **attributes) }
 
       it 'finds the user the same way' do
-        expect(finder.find(attributes)).to eq(user)
+        expect(finder.find_or_create(attributes)).to eq(user)
       end
     end
 
@@ -75,7 +85,7 @@ describe Zyra::Finder do
       before do
         new_name = name
 
-        event_registry.register(:found) do |model|
+        finder.after(:found) do |model|
           model.update(name: new_name)
         end
       end
@@ -84,7 +94,7 @@ describe Zyra::Finder do
         let!(:user) { create(:user, **attributes) }
 
         it 'runs the event after the model was found' do
-          expect { finder.find(attributes) }
+          expect { finder.find_or_create(attributes) }
             .to change { user.reload.name }
             .to(name)
         end
@@ -92,7 +102,12 @@ describe Zyra::Finder do
 
       context 'when the model is not found' do
         it do
-          expect(finder.find(attributes)).to be_nil
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
         end
       end
     end

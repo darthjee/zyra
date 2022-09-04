@@ -3,9 +3,12 @@
 require 'spec_helper'
 
 describe Zyra::Builder do
-  subject(:builder) { described_class.new(model_class) }
+  subject(:builder) do
+    described_class.new(model_class, event_registry: event_registry)
+  end
 
-  let(:model_class) { User }
+  let(:event_registry) { Jace::Registry.new }
+  let(:model_class)    { User }
 
   describe '#build' do
     it do
@@ -41,7 +44,7 @@ describe Zyra::Builder do
 
       before do
         value = name
-        builder.after(:build) { |model| model.name = value }
+        event_registry.register(:build) { |model| model.name = value }
       end
 
       it 'runs the event handler' do
@@ -85,7 +88,9 @@ describe Zyra::Builder do
 
       before do
         value = name
-        builder.after(:build) { |model| model.name = "#{value}#{model.id}" }
+        event_registry.register(:build) do |model|
+          model.name = "#{value}#{model.id}"
+        end
       end
 
       it 'runs the event handler' do
@@ -99,7 +104,9 @@ describe Zyra::Builder do
 
       before do
         value = name
-        builder.after(:create) { |model| model.name = "#{value}#{model.id}" }
+        event_registry.register(:create) do |model|
+          model.name = "#{value}#{model.id}"
+        end
       end
 
       it 'runs the event handler' do
@@ -107,23 +114,6 @@ describe Zyra::Builder do
         expect(model.name)
           .to eq("#{name}#{model.id}")
       end
-    end
-  end
-
-  describe '#after' do
-    let(:name) { SecureRandom.hex(10) }
-
-    it 'register a handler to be ran after an event' do
-      value = name
-
-      expect { builder.after(:build) { |model| model.name = value } }
-        .to change { builder.build.name }
-        .from(nil).to(name)
-    end
-
-    it do
-      expect(builder.after(:build) {})
-        .to be(builder)
     end
   end
 end
