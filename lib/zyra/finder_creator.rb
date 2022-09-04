@@ -11,7 +11,7 @@ module Zyra
     end
 
     def find_or_create(attributes)
-      finder.find(attributes) || builder.create(attributes)
+      find(attributes) || create(attributes)
     end
 
     # @api public
@@ -45,6 +45,9 @@ module Zyra
     #
     # @return [Array<Symbol>]
     attr_reader :model_class, :keys
+
+    delegate :find, to: :finder
+    delegate :create, to: :builder
 
     # @private
     #
