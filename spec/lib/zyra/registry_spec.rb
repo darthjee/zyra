@@ -11,13 +11,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User, key, find_by: :email))
-          .to eq(Zyra::FinderCreator.new(User, []))
+          .to eq(Zyra::FinderCreator.new(User, [:email]))
       end
 
       it 'register builder under the key' do
         expect { registry.register(User, key, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, []))
+          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
       end
     end
 
@@ -26,13 +26,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User, key, find_by: :email))
-          .to eq(Zyra::FinderCreator.new(User, []))
+          .to eq(Zyra::FinderCreator.new(User, [:email]))
       end
 
       it 'register builder under the key' do
         expect { registry.register(User, key, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, []))
+          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
       end
     end
 
@@ -41,13 +41,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User, find_by: :email))
-          .to eq(Zyra::FinderCreator.new(User, []))
+          .to eq(Zyra::FinderCreator.new(User, [:email]))
       end
 
       it 'register builder under the correct key' do
         expect { registry.register(User, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, []))
+          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
       end
     end
   end
@@ -69,7 +69,7 @@ describe Zyra::Registry do
 
       it do
         expect(registry.finder_creator_for(key))
-          .to eq(Zyra::FinderCreator.new(User, []))
+          .to eq(Zyra::FinderCreator.new(User, [:email]))
       end
 
       context 'when passing a string key' do
@@ -77,7 +77,7 @@ describe Zyra::Registry do
 
         it do
           expect(registry.finder_creator_for(key))
-            .to eq(Zyra::FinderCreator.new(User, []))
+            .to eq(Zyra::FinderCreator.new(User, [:email]))
         end
       end
     end
@@ -89,7 +89,7 @@ describe Zyra::Registry do
 
       it do
         expect(registry.finder_creator_for(key))
-          .to eq(Zyra::FinderCreator.new(User, []))
+          .to eq(Zyra::FinderCreator.new(User, [:email]))
       end
 
       context 'when passing a string key' do
@@ -97,7 +97,7 @@ describe Zyra::Registry do
 
         it do
           expect(registry.finder_creator_for(key))
-            .to eq(Zyra::FinderCreator.new(User, []))
+            .to eq(Zyra::FinderCreator.new(User, [:email]))
         end
       end
     end
