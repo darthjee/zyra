@@ -34,21 +34,6 @@ module Zyra
       event_registry.trigger(:found, model) { model }
     end
 
-    # @api public
-    # Register a handler on a certain event
-    #
-    # Possible event is +found+
-    #
-    # @param event [Symbol,String] event to be watched.
-    # @param block [Proc] block to be executed when the event is called
-    #
-    # @yield [Object] the model built
-    #
-    # @return [Finder] the finder itself
-    def after(event, &block)
-      tap { event_registry.register(event, &block) }
-    end
-
     # Checks if another finder is equal to the current finder
     #
     # This is used mostly for rspec expectations

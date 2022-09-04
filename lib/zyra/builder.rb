@@ -48,21 +48,6 @@ module Zyra
       end
     end
 
-    # @api public
-    # Register a handler on a certain event
-    #
-    # Possible events are +build+, +create+
-    #
-    # @param event [Symbol,String] event to be watched.
-    # @param block [Proc] block to be executed when the event is called
-    #
-    # @yield [Object] the model built
-    #
-    # @return [Builder] the builder itself
-    def after(event, &block)
-      tap { event_registry.register(event, &block) }
-    end
-
     # Checks if another builder is equal to the current builder
     #
     # This is used mostly for rspec expectations
