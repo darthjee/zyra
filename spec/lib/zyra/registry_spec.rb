@@ -10,12 +10,12 @@ describe Zyra::Registry do
       let(:key) { :user_alias }
 
       it 'creates a builder for the given class' do
-        expect(registry.register(User, key))
+        expect(registry.register(User, key, find_by: :email))
           .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the key' do
-        expect { registry.register(User, key) }
+        expect { registry.register(User, key, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
@@ -25,12 +25,12 @@ describe Zyra::Registry do
       let(:key) { 'user' }
 
       it 'creates a builder for the given class' do
-        expect(registry.register(User, key))
+        expect(registry.register(User, key, find_by: :email))
           .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the key' do
-        expect { registry.register(User, key) }
+        expect { registry.register(User, key, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
@@ -40,12 +40,12 @@ describe Zyra::Registry do
       let(:key) { :user }
 
       it 'creates a builder for the given class' do
-        expect(registry.register(User))
+        expect(registry.register(User, find_by: :email))
           .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the correct key' do
-        expect { registry.register(User) }
+        expect { registry.register(User, find_by: :email) }
           .to change { registry.finder_creator_for(key) }
           .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
@@ -64,7 +64,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a symbol key' do
       before do
-        registry.register(User, :user)
+        registry.register(User, :user, find_by: :email)
       end
 
       it do
@@ -84,7 +84,7 @@ describe Zyra::Registry do
 
     context 'when there is no builder registered on a string key' do
       before do
-        registry.register(User, 'user')
+        registry.register(User, 'user', find_by: :email)
       end
 
       it do
