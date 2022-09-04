@@ -11,13 +11,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User, key))
-          .to eq(Zyra::Builder.new(User))
+          .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the key' do
         expect { registry.register(User, key) }
           .to change { registry.builder_for(key) }
-          .from(nil).to(Zyra::Builder.new(User))
+          .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
 
@@ -26,13 +26,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User, key))
-          .to eq(Zyra::Builder.new(User))
+          .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the key' do
         expect { registry.register(User, key) }
           .to change { registry.builder_for(key) }
-          .from(nil).to(Zyra::Builder.new(User))
+          .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
 
@@ -41,13 +41,13 @@ describe Zyra::Registry do
 
       it 'creates a builder for the given class' do
         expect(registry.register(User))
-          .to eq(Zyra::Builder.new(User))
+          .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       it 'register builder under the correct key' do
         expect { registry.register(User) }
           .to change { registry.builder_for(key) }
-          .from(nil).to(Zyra::Builder.new(User))
+          .from(nil).to(Zyra::FinderCreator.new(User, []))
       end
     end
   end
@@ -69,7 +69,7 @@ describe Zyra::Registry do
 
       it do
         expect(registry.builder_for(key))
-          .to eq(Zyra::Builder.new(User))
+          .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       context 'when passing a string key' do
@@ -77,7 +77,7 @@ describe Zyra::Registry do
 
         it do
           expect(registry.builder_for(key))
-            .to eq(Zyra::Builder.new(User))
+            .to eq(Zyra::FinderCreator.new(User, []))
         end
       end
     end
@@ -89,7 +89,7 @@ describe Zyra::Registry do
 
       it do
         expect(registry.builder_for(key))
-          .to eq(Zyra::Builder.new(User))
+          .to eq(Zyra::FinderCreator.new(User, []))
       end
 
       context 'when passing a string key' do
@@ -97,7 +97,7 @@ describe Zyra::Registry do
 
         it do
           expect(registry.builder_for(key))
-            .to eq(Zyra::Builder.new(User))
+            .to eq(Zyra::FinderCreator.new(User, []))
         end
       end
     end

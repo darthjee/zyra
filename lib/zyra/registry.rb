@@ -7,7 +7,7 @@ module Zyra
   class Registry
     # (see Zyra.register)
     def register(klass, key = klass.name.gsub(/::([A-Z])/, '_\1').downcase)
-      registry[key.to_sym] = Builder.new(klass)
+      registry[key.to_sym] = FinderCreator.new(klass, [])
     end
 
     # Returns a registered builder

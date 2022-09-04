@@ -150,7 +150,7 @@ describe Zyra do
 
       it do
         expect(described_class.after(key, :build) {})
-          .to be_a(Zyra::Builder)
+          .to be_a(Zyra::FinderCreator)
       end
     end
   end
