@@ -11,7 +11,7 @@ module Zyra
     end
 
     def find_or_create(attributes)
-      finder.find(attributes)
+      finder.find(attributes) || builder.create(attributes)
     end
 
     # @api public
@@ -60,6 +60,10 @@ module Zyra
 
     def finder
       @finder ||= Finder.new(model_class, keys, event_registry: event_registry)
+    end
+
+    def builder
+      @builder ||= Builder.new(model_class, event_registry: event_registry)
     end
   end
 end

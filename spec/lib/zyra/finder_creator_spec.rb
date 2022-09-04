@@ -23,7 +23,12 @@ describe Zyra::FinderCreator do
 
     context 'when there is no entry in the database' do
       it do
-        expect(finder.find_or_create(attributes)).to be_nil
+        expect(finder.find_or_create(attributes)).to be_a(model_class)
+      end
+
+      it do
+        expect { finder.find_or_create(attributes) }
+          .to change(model_class, :count)
       end
     end
 
@@ -46,8 +51,13 @@ describe Zyra::FinderCreator do
     context 'when there is another entry' do
       before { create(:user) }
 
-      it 'returns the user' do
-        expect(finder.find_or_create(attributes)).to be_nil
+      it 'returns a new model' do
+        expect(finder.find_or_create(attributes)).to be_a(model_class)
+      end
+
+      it do
+        expect { finder.find_or_create(attributes) }
+          .to change(model_class, :count)
       end
     end
 
@@ -92,7 +102,12 @@ describe Zyra::FinderCreator do
 
       context 'when the model is not found' do
         it do
-          expect(finder.find_or_create(attributes)).to be_nil
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
         end
       end
     end
