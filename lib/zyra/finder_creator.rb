@@ -94,7 +94,6 @@ module Zyra
         other.keys == keys
     end
 
-
     protected
 
     # @method model_class

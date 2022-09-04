@@ -105,7 +105,8 @@ module Zyra
     #
     # @return [Builder]
     def finder_creator_for(key)
-      registry.finder_creator_for(key) || raise(Exceptions::BuilderNotRegistered)
+      registry.finder_creator_for(key) ||
+        raise(Exceptions::BuilderNotRegistered)
     end
 
     # @private
