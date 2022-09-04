@@ -88,7 +88,9 @@ describe Zyra::Builder do
 
       before do
         value = name
-        event_registry.register(:build) { |model| model.name = "#{value}#{model.id}" }
+        event_registry.register(:build) do |model|
+          model.name = "#{value}#{model.id}"
+        end
       end
 
       it 'runs the event handler' do
@@ -102,7 +104,9 @@ describe Zyra::Builder do
 
       before do
         value = name
-        event_registry.register(:create) { |model| model.name = "#{value}#{model.id}" }
+        event_registry.register(:create) do |model|
+          model.name = "#{value}#{model.id}"
+        end
       end
 
       it 'runs the event handler' do
