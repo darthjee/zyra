@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Zyra
+  # Class responsible for making sure a model existis
+  #
+  # First, the object searchs in he database by the keys, and
+  # if it fails to finds, it creates a new entry
   class FinderCreator
     # @param model_class [Class] Model class that does the ORM
     # @param keys [Array<Symbol,String>] keys used when searching
