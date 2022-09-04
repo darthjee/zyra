@@ -16,6 +16,7 @@ module Zyra
       @event_registry = event_registry
     end
 
+    # @api public
     # Search the entry in the database
     #
     # The query is done using part of the expected
