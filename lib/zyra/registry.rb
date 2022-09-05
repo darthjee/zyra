@@ -22,7 +22,7 @@ module Zyra
     #
     # @param (see FinderCreator#after)
     # @yield (see FinderCreator#after)
-    # @return (see FinderCreator#after)
+    # @return [Finder] The finder registered under that key
     def after(key, event, &block)
       finder_creator_for(key).after(event, &block)
     end
@@ -37,9 +37,11 @@ module Zyra
     #
     # @yield (see FinderCreator#find_or_create)
     #
-    # @return (see FinderCreator#find_or_create)
+    # @return [Object] A model either from the database or just
+    #   inserted into it
     #
     # @see #register
+    # @see FinderCreator#find_or_create
     def find_or_create(key, attributes = {}, &block)
       finder_creator_for(key).find_or_create(attributes, &block)
     end
@@ -47,6 +49,7 @@ module Zyra
     private
 
     # @private
+    # @api private
     # Returns a registered creator
     #
     # when the creator was not registerd, +nil+ is returned
@@ -60,6 +63,7 @@ module Zyra
     end
 
     # @private
+    # @api private
     #
     # Registry store for all creators
     #

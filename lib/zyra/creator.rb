@@ -16,9 +16,13 @@ module Zyra
 
     # Creates an instance of the registered model class
     #
-    # @param (see #build)
-    # @yield (see #build)
-    # @return (see #build)
+    # @param attributes [Hash] attributes to be set in the model
+    # @param block [Proc] block to be ran after where more attributes
+    # will be set
+    #
+    # @yield [Object] Instance of the model class
+    #
+    # @return [Object] an instance of model class
     def create(**attributes, &block)
       model = build(**attributes, &block)
 
@@ -27,31 +31,14 @@ module Zyra
       end
     end
 
-    # Checks if another creator is equal to the current creator
-    #
-    # This is used mostly for rspec expectations
-    #
-    # @param other [Object] other object to be compared
-    #
-    # @return [TrueClass,FalseClass]
-    def ==(other)
-      return unless other.class == self.class
-
-      other.model_class == model_class
-    end
-
     protected
 
     # @private
     # Builds an instance of the registered model class
     #
-    # @param attributes [Hash] attributes to be set in the model
-    # @param block [Proc] block to be ran after where more attributes
-    # will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
+    # @param (see #create)
+    # @yield (see #create)
+    # @return (see #create)
     def build(**attributes, &block)
       block ||= proc {}
 

@@ -1,4 +1,4 @@
-threshold: 90
+threshold: 98
 require_exact_threshold: false
 rules:
   ApiTag::Presence:
@@ -15,27 +15,17 @@ rules:
     exclude: []
   ExampleTag:
     enabled: true
-    exclude:
-      - Zyra.register
-      - Zyra.after
-      - Zyra.build
-      - Zyra.create
-      - Zyra::Builder#after
-      - Zyra::Builder#build
-      - Zyra::Builder#create
-      - Zyra::Registry#register
-      - Zyra::Finder#after
+    excludei: []
   ReturnTag:
     enabled: true
-    exclude:
-      - Zyra.after
-      - Zyra.build
-      - Zyra.create
+    exclude: []
   Summary::Presence:
     enabled: true
     exclude:
-      - Zyra::Builder#initialize
       - Zyra::Finder#initialize
+      - Zyra::Creator#initialize
+      - Zyra::FinderCreator#initialize
+      - Zyra::Registry#initialize
   Summary::Length:
     enabled: true
     exclude: []

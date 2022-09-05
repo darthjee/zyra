@@ -16,7 +16,6 @@ module Zyra
       @event_registry = event_registry
     end
 
-    # @api public
     # Search the entry in the database
     #
     # The query is done using part of the expected
@@ -32,20 +31,6 @@ module Zyra
       return unless model
 
       event_registry.trigger(:found, model) { model }
-    end
-
-    # Checks if another finder is equal to the current finder
-    #
-    # This is used mostly for rspec expectations
-    #
-    # @param other [Object] other object to be compared
-    #
-    # @return [TrueClass,FalseClass]
-    def ==(other)
-      return unless other.class == self.class
-
-      other.model_class == model_class &&
-        other.keys == keys
     end
 
     protected
