@@ -1,4 +1,6 @@
-shared_examples "a method that registers an event handler" do
+# frozen_string_literal: true
+
+shared_examples 'a method that registers an event handler' do
   let(:model_class) { User }
   let(:key)         { :user }
   let(:name)        { SecureRandom.hex(10) }

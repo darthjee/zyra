@@ -1,4 +1,6 @@
-shared_examples "a method that returns or create a model" do
+# frozen_string_literal: true
+
+shared_examples 'a method that returns or create a model' do
   let(:key)         { :user }
   let(:email)       { SecureRandom.hex(10) }
   let(:model_class) { User }

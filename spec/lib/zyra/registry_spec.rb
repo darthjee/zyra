@@ -6,14 +6,14 @@ describe Zyra::Registry do
   let(:registry) { described_class.new }
 
   describe '#register' do
-    it_behaves_like  "a method that registers a finder creator"
+    it_behaves_like 'a method that registers a finder creator'
   end
 
   describe '#on' do
-    it_behaves_like "a method that registers an event handler"
+    it_behaves_like 'a method that registers an event handler'
   end
 
   describe '#find_or_create' do
-    it_behaves_like "a method that returns or create a model"
+    it_behaves_like 'a method that returns or create a model'
   end
 end

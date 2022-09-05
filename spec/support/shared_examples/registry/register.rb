@@ -1,4 +1,6 @@
-shared_examples "a method that registers a finder creator" do
+# frozen_string_literal: true
+
+shared_examples 'a method that registers a finder creator' do
   let(:recovery_key) { [key.to_s, key.to_sym].sample }
   let(:attributes)   { { email: 'email@srv.com' } }
 
