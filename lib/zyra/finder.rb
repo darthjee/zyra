@@ -10,7 +10,7 @@ module Zyra
     # @param keys [Array<Symbol,String>] keys used when searching
     #   for the entry
     # @param event_registry [Jace::Registry] event registry to handle events
-    def initialize(model_class, keys, event_registry: Jace::Registry.new)
+    def initialize(model_class, keys, event_registry:)
       @model_class = model_class
       @keys = [keys].flatten.map(&:to_sym)
       @event_registry = event_registry

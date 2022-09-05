@@ -3,7 +3,7 @@
 module Zyra
   # @api private
   #
-  # Registry of all registered builders
+  # Registry of all registered creators
   class Registry
     # (see Zyra.register)
     def register(klass, key = nil, find_by:)
@@ -12,13 +12,13 @@ module Zyra
       registry[key.to_sym] = FinderCreator.new(klass, find_by)
     end
 
-    # Returns a registered builder
+    # Returns a registered creator
     #
-    # when the builder was not registerd, +nil+ is returned
+    # when the creator was not registerd, +nil+ is returned
     #
-    # @param key [String,Symbol] key under which the builder is registered
+    # @param key [String,Symbol] key under which the creator is registered
     #
-    # @return [Zyra::Builder]
+    # @return [Zyra::Creator]
     def finder_creator_for(key)
       registry[key.to_sym]
     end
@@ -27,9 +27,9 @@ module Zyra
 
     # @private
     #
-    # Registry store for all builders
+    # Registry store for all creators
     #
-    # @return [Hash] map of all registered builders
+    # @return [Hash] map of all registered creators
     def registry
       @registry ||= {}
     end

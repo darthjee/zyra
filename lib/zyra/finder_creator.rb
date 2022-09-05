@@ -49,26 +49,10 @@ module Zyra
     # @return [Object] the model from the database
     delegate :find, to: :finder
 
-    # @method build
-    # @api public
-    #
-    # Builds an instance of the registered model class
-    #
-    # @overload build(attributes, &block)
-    #   @param attributes [Hash] attributes to be set in the model
-    #   @param block [Proc] block to be ran after where more attributes
-    #   will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
-
     # @method create
     # @api public
     #
     # Creates an instance of the registered model class
-    #
-    # This behaves like {#build}, but persists the entry
     #
     # @overload create(attributes, &block)
     #   @param attributes [Hash] attributes to be set in the model
@@ -78,7 +62,7 @@ module Zyra
     # @yield [Object] Instance of the model class
     #
     # @return [Object] an instance of model class
-    delegate :build, :create, to: :builder
+    delegate :create, to: :creator
 
     # Checks if another finder creator is equal to the current
     #
@@ -137,14 +121,14 @@ module Zyra
 
     # @private
     #
-    # Returns an instance of {Builder}
+    # Returns an instance of {Creator}
     #
-    # Builder will use the same event registry so that event
+    # Creator will use the same event registry so that event
     # handling and registration is centralized
     #
-    # @return Builder
-    def builder
-      @builder ||= Builder.new(model_class, event_registry: event_registry)
+    # @return Creator
+    def creator
+      @creator ||= Creator.new(model_class, event_registry: event_registry)
     end
   end
 end
