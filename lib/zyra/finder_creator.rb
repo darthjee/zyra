@@ -33,7 +33,9 @@ module Zyra
     # @see Zyra::Finder#find
     # @see Zyra::Creator#create
     def find_or_create(attributes)
-      find(attributes) || create(attributes)
+      model = find(attributes) || create(attributes)
+
+      event_registry.trigger(:return, model) { model }
     end
 
     # Register a handler on a certain event

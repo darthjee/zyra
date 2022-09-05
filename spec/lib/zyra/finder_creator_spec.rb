@@ -200,5 +200,42 @@ describe Zyra::FinderCreator do
         end
       end
     end
+
+    context 'when there is an event handler on return' do
+      let(:name) { 'new_name' }
+
+      before do
+        new_name = name
+
+        finder.on(:return) do |model|
+          model.update(name: new_name)
+        end
+      end
+
+      context 'when the model is found' do
+        let!(:user) { create(:user, **attributes) }
+
+        it 'does not run the event after the model was found' do
+          expect { finder.find_or_create(attributes) }
+            .to change { user.reload.name }
+        end
+      end
+
+      context 'when the model is not found' do
+        it 'runs the event after the model was returned' do
+          expect(finder.find_or_create(attributes).reload.name)
+            .to eq(name)
+        end
+
+        it do
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
+        end
+      end
+    end
   end
 end
