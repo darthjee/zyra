@@ -24,9 +24,10 @@ module Zyra
     # Possible event is +found+
     #
     # @param event [Symbol,String] event to be watched.
+    #   Current events are +found+, +build+ and +create+
     # @param block [Proc] block to be executed when the event is called
     #
-    # @yield [Object] the model built
+    # @yield [Object] the model to be returned
     #
     # @return [Finder] the finder itself
     def after(event, &block)

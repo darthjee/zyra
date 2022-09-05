@@ -18,7 +18,7 @@ module Zyra
   autoload :Registry,      'zyra/registry'
 
   class << self
-    # @method .register
+    # @method register
     # @api public
     #
     # Register a new creator
@@ -34,23 +34,17 @@ module Zyra
     #   @param key [String,Symbol] key to be used when storyin the creator
     #   @param klass [Class] Model class to be used by the creator
     #
-    # @return [Zyra::Creator] registered creator
-    delegate :register, to: :registry
+    # @return [Zyra::FinderCreator] registered finder_creator
 
+    # @method after(key, event, &block)
     # Register a handler on a certain event
     #
-    # Possible events are +build+, +create+
+    # Possible events are +found+, +build+, +create+
     #
-    # @param key [String,Symbol] key under which the {Creator creator}
-    #   is {Registry registered}
-    # @param (see Creator#after)
-    #
-    # @yield [Object] the model built
-    #
-    # @return (see Creator#after)
-    def after(key, event, &block)
-      finder_creator_for(key).after(event, &block)
-    end
+    # @param (see Zyra::Registry#after)
+    # @yield (see Zyra::Registry#after)
+    # @return (see Zyra::Registry#after)
+    delegate :register, :after, to: :registry
 
     # Builds an instance of the registered model class
     #

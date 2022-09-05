@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Zyra
-  # @api private
+  # @api public
   #
   # Registry of all registered creators
   class Registry
@@ -10,6 +10,20 @@ module Zyra
       key ||= klass.name.gsub(/::([A-Z])/, '_\1').downcase
 
       registry[key.to_sym] = FinderCreator.new(klass, find_by)
+    end
+
+    # Register a handler on a certain event
+    #
+    # Possible events are +found+, +build+ and +create+
+    #
+    # @param key [String,Symbol] key under which the {FinderCreator finder_creator}
+    #   is {Zyra::Registry#register registered}
+    #
+    # @param (see FinderCreator#after)
+    # @yield (see FinderCreator#after)
+    # @return (see FinderCreator#after)
+    def after(key, event, &block)
+      finder_creator_for(key).after(event, &block)
     end
 
     # Returns a registered creator
