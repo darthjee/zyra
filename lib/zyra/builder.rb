@@ -14,7 +14,6 @@ module Zyra
       @event_registry = event_registry
     end
 
-    # @api public
     # Builds an instance of the registered model class
     #
     # @param attributes [Hash] attributes to be set in the model
@@ -32,7 +31,6 @@ module Zyra
       end
     end
 
-    # @api public
     # Creates an instance of the registered model class
     #
     # This behaves like {#build}, but persists the entry
