@@ -34,20 +34,6 @@ module Zyra
       event_registry.trigger(:found, model) { model }
     end
 
-    # Checks if another finder is equal to the current finder
-    #
-    # This is used mostly for rspec expectations
-    #
-    # @param other [Object] other object to be compared
-    #
-    # @return [TrueClass,FalseClass]
-    def ==(other)
-      return unless other.class == self.class
-
-      other.model_class == model_class &&
-        other.keys == keys
-    end
-
     protected
 
     # @method model_class
