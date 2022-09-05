@@ -27,13 +27,15 @@ module Zyra
     #
     # @param attributes [Hash] expected attributes
     #
+    # @return [Object] An instance of model either from
+    #   database or recently inserted
+    #
     # @see Zyra::Finder#find
     # @see Zyra::Creator#create
     def find_or_create(attributes)
       find(attributes) || create(attributes)
     end
 
-    # @api public
     # Register a handler on a certain event
     #
     # Possible event is +found+
@@ -105,6 +107,7 @@ module Zyra
     end
 
     # @private
+    # @api private
     # @method find
     #
     # Search the entry in the database
@@ -121,6 +124,7 @@ module Zyra
     delegate :find, to: :finder
 
     # @private
+    # @api private
     # @method create
     #
     # Creates an instance of the registered model class
