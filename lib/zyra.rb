@@ -44,23 +44,17 @@ module Zyra
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)
     # @return (see Zyra::Registry#after)
-    delegate :register, :after, to: :registry
 
+    # @method find_or_create(key, attributes = {}, &block)
+    #
     # Builds an instance of the registered model class
     #
-    # @param key [String,Symbol] key under which the {Creator creator}
-    #   is {Registry registered}
-    # @param (see FinderCreator#find_or_create)
-    #
-    # @yield (see FinderCreator#find_or_create)
-    #
-    # @return (see FinderCreator#find_or_create)
+    # @param (see Zyra::Registry#after)
+    # @yield (see Zyra::Registry#after)
+    # @return (see Zyra::Registry#after)
     #
     # @see .register
-    # @see FinderCreator#find_or_create
-    def find_or_create(key, attributes = {}, &block)
-      finder_creator_for(key).find_or_create(attributes, &block)
-    end
+    delegate :register, :after, :find_or_create, to: :registry
 
     # @api private
     #

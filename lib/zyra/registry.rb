@@ -26,6 +26,23 @@ module Zyra
       finder_creator_for(key).after(event, &block)
     end
 
+    # Builds an instance of the registered model class
+    #
+    # @param key [String,Symbol] key under which the
+    #   {FinderCreator finder_creator}
+    #   is {Zyra::Registry#register registered}
+    #
+    # @param (see FinderCreator#find_or_create)
+    #
+    # @yield (see FinderCreator#find_or_create)
+    #
+    # @return (see FinderCreator#find_or_create)
+    #
+    # @see #register
+    def find_or_create(key, attributes = {}, &block)
+      finder_creator_for(key).find_or_create(attributes, &block)
+    end
+
     # Returns a registered creator
     #
     # when the creator was not registerd, +nil+ is returned
