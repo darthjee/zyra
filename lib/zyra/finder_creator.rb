@@ -49,37 +49,6 @@ module Zyra
       tap { event_registry.register(event, &block) }
     end
 
-    # @method find
-    # @api public
-    #
-    # Search the entry in the database
-    #
-    # The query is done using part of the expected
-    # attributes filtered by the configured keys}
-    #
-    # if the model is found an event is triggered
-    #
-    # @overload find(attributes)
-    #   @param attributes [Hash] expected model attribiutes
-    #
-    # @return [Object] the model from the database
-    delegate :find, to: :finder
-
-    # @method create
-    # @api public
-    #
-    # Creates an instance of the registered model class
-    #
-    # @overload create(attributes, &block)
-    #   @param attributes [Hash] attributes to be set in the model
-    #   @param block [Proc] block to be ran after where more attributes
-    #   will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
-    delegate :create, to: :creator
-
     # Checks if another finder creator is equal to the current
     #
     # This is used mostly for rspec expectations
@@ -134,6 +103,37 @@ module Zyra
     def finder
       @finder ||= Finder.new(model_class, keys, event_registry: event_registry)
     end
+
+    # @private
+    # @method find
+    #
+    # Search the entry in the database
+    #
+    # The query is done using part of the expected
+    # attributes filtered by the configured keys}
+    #
+    # if the model is found an event is triggered
+    #
+    # @overload find(attributes)
+    #   @param attributes [Hash] expected model attribiutes
+    #
+    # @return [Object] the model from the database
+    delegate :find, to: :finder
+
+    # @private
+    # @method create
+    #
+    # Creates an instance of the registered model class
+    #
+    # @overload create(attributes, &block)
+    #   @param attributes [Hash] attributes to be set in the model
+    #   @param block [Proc] block to be ran after where more attributes
+    #   will be set
+    #
+    # @yield [Object] Instance of the model class
+    #
+    # @return [Object] an instance of model class
+    delegate :create, to: :creator
 
     # @private
     #
