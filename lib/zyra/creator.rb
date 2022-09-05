@@ -16,9 +16,13 @@ module Zyra
 
     # Creates an instance of the registered model class
     #
-    # @param (see #build)
-    # @yield (see #build)
-    # @return (see #build)
+    # @param attributes [Hash] attributes to be set in the model
+    # @param block [Proc] block to be ran after where more attributes
+    # will be set
+    #
+    # @yield [Object] Instance of the model class
+    #
+    # @return [Object] an instance of model class
     def create(**attributes, &block)
       model = build(**attributes, &block)
 
@@ -32,13 +36,9 @@ module Zyra
     # @private
     # Builds an instance of the registered model class
     #
-    # @param attributes [Hash] attributes to be set in the model
-    # @param block [Proc] block to be ran after where more attributes
-    # will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
+    # @param (see #create)
+    # @yield (see #create)
+    # @return (see #create)
     def build(**attributes, &block)
       block ||= proc {}
 
