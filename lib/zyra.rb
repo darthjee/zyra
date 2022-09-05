@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'sinclair'
 require 'jace'
 
 # @api public
