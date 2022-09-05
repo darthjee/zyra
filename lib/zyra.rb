@@ -64,8 +64,8 @@ module Zyra
     #
     # @see .register
     # @see Builder#build
-    def build(key, **attributes, &block)
-      finder_creator_for(key).build(**attributes, &block)
+    def build(key, attributes = {}, &block)
+      finder_creator_for(key).build(attributes, &block)
     end
 
     # Creates an instance of the registered model class
@@ -78,8 +78,12 @@ module Zyra
     #
     # @see .register
     # @see Builder#create
-    def create(key, **attributes, &block)
-      finder_creator_for(key).create(**attributes, &block)
+    def create(key, attributes = {}, &block)
+      finder_creator_for(key).create(attributes, &block)
+    end
+
+    def find_or_create(key, attributes = {}, &block)
+      finder_creator_for(key).find_or_create(attributes, &block)
     end
 
     # @api private
