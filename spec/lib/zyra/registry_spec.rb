@@ -6,6 +6,9 @@ describe Zyra::Registry do
   let(:registry) { described_class.new }
 
   describe '#register' do
+    let(:recovery_key) { [key.to_s, key.to_sym].sample }
+    let(:attributes)   { { email: 'email@srv.com' } }
+
     context 'when providing symbol alias' do
       let(:key) { :user_alias }
 
@@ -15,9 +18,10 @@ describe Zyra::Registry do
       end
 
       it 'register creator under the key' do
-        expect { registry.register(User, key, find_by: :email) }
-          .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
+        registry.register(User, key, find_by: :email)
+
+        expect(registry.find_or_create(recovery_key, attributes))
+          .to be_a(User)
       end
     end
 
@@ -30,9 +34,10 @@ describe Zyra::Registry do
       end
 
       it 'register creator under the key' do
-        expect { registry.register(User, key, find_by: :email) }
-          .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
+        registry.register(User, key, find_by: :email)
+
+        expect(registry.find_or_create(recovery_key, attributes))
+          .to be_a(User)
       end
     end
 
@@ -45,9 +50,10 @@ describe Zyra::Registry do
       end
 
       it 'register creator under the correct key' do
-        expect { registry.register(User, find_by: :email) }
-          .to change { registry.finder_creator_for(key) }
-          .from(nil).to(Zyra::FinderCreator.new(User, [:email]))
+        registry.register(User, key, find_by: :email)
+
+        expect(registry.find_or_create(recovery_key, attributes))
+          .to be_a(User)
       end
     end
   end
@@ -57,8 +63,8 @@ describe Zyra::Registry do
 
     context 'when there is no creator registered' do
       it do
-        expect(registry.finder_creator_for(key))
-          .to be_nil
+        expect { registry.finder_creator_for(key) }
+          .to raise_error(Zyra::Exceptions::CreatorNotRegistered)
       end
     end
 
