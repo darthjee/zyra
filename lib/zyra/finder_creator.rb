@@ -106,9 +106,10 @@ module Zyra
       @finder ||= Finder.new(model_class, keys, event_registry: event_registry)
     end
 
+    # @method find(attributes)
+    #
     # @private
     # @api private
-    # @method find
     #
     # Search the entry in the database
     #
@@ -123,9 +124,9 @@ module Zyra
     # @return [Object] the model from the database
     delegate :find, to: :finder
 
+    # @method create(attributes, &block)
     # @private
     # @api private
-    # @method create
     #
     # Creates an instance of the registered model class
     #
