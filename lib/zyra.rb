@@ -37,21 +37,25 @@ module Zyra
     # @return [Zyra::FinderCreator] registered finder_creator
 
     # @method after(key, event, &block)
+    # @api public
+    #
     # Register a handler on a certain event
     #
     # Possible events are +found+, +build+, +create+
     #
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)
-    # @return (see Zyra::Registry#after)
+    # @return [Finder] The finder registered under that key
 
     # @method find_or_create(key, attributes = {}, &block)
+    # @api public
     #
     # Builds an instance of the registered model class
     #
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)
-    # @return (see Zyra::Registry#after)
+    # @return [Object] A model either from the database or just
+    #   inserted into it
     #
     # @see .register
     delegate :register, :after, :find_or_create, to: :registry
