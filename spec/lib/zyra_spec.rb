@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Zyra do
   before { described_class.reset }
 
-  describe '.after' do
+  describe '.on' do
     let(:model_class) { User }
     let(:key)         { :user }
     let(:name)        { SecureRandom.hex(10) }
@@ -20,7 +20,7 @@ describe Zyra do
 
     context 'when a creator has not been registered' do
       it do
-        expect { described_class.after(key, :found) {} }
+        expect { described_class.on(key, :found) {} }
           .to raise_error(Zyra::Exceptions::NotRegistered)
       end
     end
@@ -34,13 +34,13 @@ describe Zyra do
       it 'register a handler to be ran after an event' do
         value = name
 
-        expect { described_class.after(key, :found) { |m| m.name = value } }
+        expect { described_class.on(key, :found) { |m| m.name = value } }
           .to change { described_class.find_or_create(key, attributes).name }
           .from('Some Name').to(name)
       end
 
       it do
-        expect(described_class.after(key, :build) {})
+        expect(described_class.on(key, :build) {})
           .to be_a(Zyra::FinderCreator)
       end
     end
@@ -139,7 +139,7 @@ describe Zyra do
         before do
           new_name = name
 
-          described_class.after(:user, :found) do |model|
+          described_class.on(:user, :found) do |model|
             model.update(name: new_name)
           end
         end
@@ -157,7 +157,7 @@ describe Zyra do
         before do
           new_name = name
 
-          described_class.after(:user, :found) do |model|
+          described_class.on(:user, :found) do |model|
             model.update(name: new_name)
           end
         end

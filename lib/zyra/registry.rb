@@ -23,7 +23,10 @@ module Zyra
     # @param (see FinderCreator#after)
     # @yield (see FinderCreator#after)
     # @return [Finder] The finder registered under that key
-    def after(key, event, &block)
+    #
+    # @see Zyra::Finder#find
+    # @see Zyra::Creator#create
+    def on(key, event, &block)
       finder_creator_for(key).after(event, &block)
     end
 

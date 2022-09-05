@@ -58,7 +58,7 @@ describe Zyra::Registry do
     end
   end
 
-  describe '.after' do
+  describe '.on' do
     let(:model_class) { User }
     let(:key)         { :user }
     let(:name)        { SecureRandom.hex(10) }
@@ -73,7 +73,7 @@ describe Zyra::Registry do
 
     context 'when a creator has not been registered' do
       it do
-        expect { registry.after(key, :found) {} }
+        expect { registry.on(key, :found) {} }
           .to raise_error(Zyra::Exceptions::NotRegistered)
       end
     end
@@ -87,13 +87,13 @@ describe Zyra::Registry do
       it 'register a handler to be ran after an event' do
         value = name
 
-        expect { registry.after(key, :found) { |m| m.name = value } }
+        expect { registry.on(key, :found) { |m| m.name = value } }
           .to change { registry.find_or_create(key, attributes).name }
           .from('Some Name').to(name)
       end
 
       it do
-        expect(registry.after(key, :build) {})
+        expect(registry.on(key, :build) {})
           .to be_a(Zyra::FinderCreator)
       end
     end
@@ -192,7 +192,7 @@ describe Zyra::Registry do
         before do
           new_name = name
 
-          registry.after(:user, :found) do |model|
+          registry.on(:user, :found) do |model|
             model.update(name: new_name)
           end
         end
@@ -210,7 +210,7 @@ describe Zyra::Registry do
         before do
           new_name = name
 
-          registry.after(:user, :found) do |model|
+          registry.on(:user, :found) do |model|
             model.update(name: new_name)
           end
         end
