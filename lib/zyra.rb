@@ -72,20 +72,6 @@ module Zyra
     # @private
     # @api private
     #
-    # Returns a registered creator for a key
-    #
-    # @param key [String,Symbol] key under which the {Creator creator}
-    #   is {Registry registered}
-    #
-    # @return [Creator]
-    def finder_creator_for(key)
-      registry.finder_creator_for(key) ||
-        raise(Exceptions::CreatorNotRegistered)
-    end
-
-    # @private
-    # @api private
-    #
     # Returns the registry containing all the creators
     #
     # @return [Registry]

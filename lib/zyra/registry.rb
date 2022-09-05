@@ -43,6 +43,9 @@ module Zyra
       finder_creator_for(key).find_or_create(attributes, &block)
     end
 
+    private
+
+    # @private
     # Returns a registered creator
     #
     # when the creator was not registerd, +nil+ is returned
@@ -54,8 +57,6 @@ module Zyra
       registry[key.to_sym] ||
         raise(Exceptions::CreatorNotRegistered)
     end
-
-    private
 
     # @private
     #
