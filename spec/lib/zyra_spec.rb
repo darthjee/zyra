@@ -18,7 +18,7 @@ describe Zyra do
       }
     end
 
-    context 'when a builder has been registered' do
+    context 'when a creator has been registered' do
       let!(:user) { create(:user, **attributes) }
 
       before do

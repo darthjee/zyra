@@ -62,7 +62,7 @@ module Zyra
     # @yield [Object] Instance of the model class
     #
     # @return [Object] an instance of model class
-    delegate :create, to: :builder
+    delegate :create, to: :creator
 
     # Checks if another finder creator is equal to the current
     #
@@ -121,14 +121,14 @@ module Zyra
 
     # @private
     #
-    # Returns an instance of {Builder}
+    # Returns an instance of {Creator}
     #
-    # Builder will use the same event registry so that event
+    # Creator will use the same event registry so that event
     # handling and registration is centralized
     #
-    # @return Builder
-    def builder
-      @builder ||= Builder.new(model_class, event_registry: event_registry)
+    # @return Creator
+    def creator
+      @creator ||= Creator.new(model_class, event_registry: event_registry)
     end
   end
 end

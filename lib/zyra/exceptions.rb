@@ -5,6 +5,6 @@ require 'jace'
 
 module Zyra
   module Exceptions
-    class BuilderNotRegistered < StandardError; end
+    class CreatorNotRegistered < StandardError; end
   end
 end

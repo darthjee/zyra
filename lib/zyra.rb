@@ -6,12 +6,12 @@ require 'jace'
 # @api public
 # @author darthjee
 #
-# Zyra allows builders to be registered to ease up
+# Zyra allows creators to be registered to ease up
 # seeding
 module Zyra
   autoload :VERSION, 'zyra/version'
 
-  autoload :Builder,       'zyra/builder'
+  autoload :Creator,       'zyra/creator'
   autoload :Exceptions,    'zyra/exceptions'
   autoload :Finder,        'zyra/finder'
   autoload :FinderCreator, 'zyra/finder_creator'
@@ -21,40 +21,40 @@ module Zyra
     # @method .register
     # @api public
     #
-    # Register a new builder
+    # Register a new creator
     #
-    # The builder will focus on one class and be registered under a
+    # The creator will focus on one class and be registered under a
     # symbol key
     #
     # @overload register(klass)
     #   When the key is not provided, it is infered from the class name
-    #   @param klass [Class] Model class to be used by the builder
+    #   @param klass [Class] Model class to be used by the creator
     #
     # @overload register(klass, key)
-    #   @param key [String,Symbol] key to be used when storyin the builder
-    #   @param klass [Class] Model class to be used by the builder
+    #   @param key [String,Symbol] key to be used when storyin the creator
+    #   @param klass [Class] Model class to be used by the creator
     #
-    # @return [Zyra::Builder] registered builder
+    # @return [Zyra::Creator] registered creator
     delegate :register, to: :registry
 
     # Register a handler on a certain event
     #
     # Possible events are +build+, +create+
     #
-    # @param key [String,Symbol] key under which the {Builder builder}
+    # @param key [String,Symbol] key under which the {Creator creator}
     #   is {Registry registered}
-    # @param (see Builder#after)
+    # @param (see Creator#after)
     #
     # @yield [Object] the model built
     #
-    # @return (see Builder#after)
+    # @return (see Creator#after)
     def after(key, event, &block)
       finder_creator_for(key).after(event, &block)
     end
 
     # Builds an instance of the registered model class
     #
-    # @param key [String,Symbol] key under which the {Builder builder}
+    # @param key [String,Symbol] key under which the {Creator creator}
     #   is {Registry registered}
     # @param (see FinderCreator#find_or_create)
     #
@@ -84,21 +84,21 @@ module Zyra
     # @private
     # @api private
     #
-    # Returns a registered builder for a key
+    # Returns a registered creator for a key
     #
-    # @param key [String,Symbol] key under which the {Builder builder}
+    # @param key [String,Symbol] key under which the {Creator creator}
     #   is {Registry registered}
     #
-    # @return [Builder]
+    # @return [Creator]
     def finder_creator_for(key)
       registry.finder_creator_for(key) ||
-        raise(Exceptions::BuilderNotRegistered)
+        raise(Exceptions::CreatorNotRegistered)
     end
 
     # @private
     # @api private
     #
-    # Returns the registry containing all the builders
+    # Returns the registry containing all the creators
     #
     # @return [Registry]
     def registry

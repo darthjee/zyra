@@ -5,7 +5,7 @@ module Zyra
   # @author Darthjee
   #
   # Class responsible for building a model
-  class Builder
+  class Creator
     # @param model_class [Class] Model class to be initialized
     #   into a model
     # @param event_registry [Jace::Registry] event registry to handle events
@@ -27,7 +27,7 @@ module Zyra
       end
     end
 
-    # Checks if another builder is equal to the current builder
+    # Checks if another creator is equal to the current creator
     #
     # This is used mostly for rspec expectations
     #

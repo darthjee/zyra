@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe Zyra::Builder do
-  subject(:builder) do
+describe Zyra::Creator do
+  subject(:creator) do
     described_class.new(model_class, event_registry: event_registry)
   end
 
@@ -12,11 +12,11 @@ describe Zyra::Builder do
 
   describe '#create' do
     it do
-      expect(builder.create).to be_a(model_class)
+      expect(creator.create).to be_a(model_class)
     end
 
     it do
-      expect(builder.create)
+      expect(creator.create)
         .to be_persisted
     end
 
@@ -24,7 +24,7 @@ describe Zyra::Builder do
       let(:name) { SecureRandom.hex(10) }
 
       it 'initializes the model with the given attribute' do
-        expect(builder.create(name: name).name)
+        expect(creator.create(name: name).name)
           .to eq(name)
       end
     end
@@ -34,7 +34,7 @@ describe Zyra::Builder do
 
       it 'initializes the model with the given attribute' do
         value = name
-        expect(builder.create { |model| model.name = value }.name)
+        expect(creator.create { |model| model.name = value }.name)
           .to eq(name)
       end
     end
@@ -50,7 +50,7 @@ describe Zyra::Builder do
       end
 
       it 'runs the event handler' do
-        expect(builder.create.name)
+        expect(creator.create.name)
           .to eq(name)
       end
     end
@@ -66,7 +66,7 @@ describe Zyra::Builder do
       end
 
       it 'runs the event handler' do
-        model = builder.create
+        model = creator.create
         expect(model.name)
           .to eq("#{name}#{model.id}")
       end
