@@ -43,6 +43,7 @@ module Zyra
     # Register a handler on a certain event
     #
     # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)

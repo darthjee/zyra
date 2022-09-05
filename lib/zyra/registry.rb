@@ -14,7 +14,8 @@ module Zyra
 
     # Register a handler on a certain event
     #
-    # Possible events are +found+, +build+ and +create+
+    # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param key [String,Symbol] key under which the
     #   {FinderCreator finder_creator}
