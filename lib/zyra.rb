@@ -56,32 +56,14 @@ module Zyra
     #
     # @param key [String,Symbol] key under which the {Builder builder}
     #   is {Registry registered}
-    # @param (see Builder#build)
+    # @param (see FinderCreator#find_or_create)
     #
-    # @yield (see Builder#build)
+    # @yield (see FinderCreator#find_or_create)
     #
-    # @return (see Builder#build)
-    #
-    # @see .register
-    # @see Builder#build
-    def build(key, attributes = {}, &block)
-      finder_creator_for(key).build(attributes, &block)
-    end
-
-    # Creates an instance of the registered model class
-    #
-    # This behaves like {.build}, but persists the entry
-    #
-    # @param (see .build)
-    # @yield (see .build)
-    # @return (see .build)
+    # @return (see FinderCreator#find_or_create)
     #
     # @see .register
-    # @see Builder#create
-    def create(key, attributes = {}, &block)
-      finder_creator_for(key).create(attributes, &block)
-    end
-
+    # @see FinderCreator#find_or_create
     def find_or_create(key, attributes = {}, &block)
       finder_creator_for(key).find_or_create(attributes, &block)
     end
