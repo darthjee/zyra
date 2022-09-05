@@ -14,7 +14,8 @@ module Zyra
 
     # Register a handler on a certain event
     #
-    # Possible events are +found+, +build+ and +create+
+    # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param key [String,Symbol] key under which the
     #   {FinderCreator finder_creator}
@@ -23,8 +24,11 @@ module Zyra
     # @param (see FinderCreator#after)
     # @yield (see FinderCreator#after)
     # @return [Finder] The finder registered under that key
-    def after(key, event, &block)
-      finder_creator_for(key).after(event, &block)
+    #
+    # @see Zyra::Finder#find
+    # @see Zyra::Creator#create
+    def on(key, event, &block)
+      finder_creator_for(key).on(event, &block)
     end
 
     # Builds an instance of the registered model class

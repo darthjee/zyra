@@ -37,12 +37,13 @@ module Zyra
     #
     # @return [Zyra::FinderCreator] registered finder_creator
 
-    # @method after(key, event, &block)
+    # @method on(key, event, &block)
     # @api public
     #
     # Register a handler on a certain event
     #
     # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)
@@ -59,7 +60,7 @@ module Zyra
     #   inserted into it
     #
     # @see .register
-    delegate :register, :after, :find_or_create, to: :registry
+    delegate :register, :on, :find_or_create, to: :registry
 
     # @api private
     #

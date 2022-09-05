@@ -33,21 +33,24 @@ module Zyra
     # @see Zyra::Finder#find
     # @see Zyra::Creator#create
     def find_or_create(attributes)
-      find(attributes) || create(attributes)
+      model = find(attributes) || create(attributes)
+
+      event_registry.trigger(:return, model) { model }
     end
 
     # Register a handler on a certain event
     #
-    # Possible event is +found+
+    # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param event [Symbol,String] event to be watched.
-    #   Current events are +found+, +build+ and +create+
+    #   Current events are +found+, +build+, +create+ and +return+
     # @param block [Proc] block to be executed when the event is called
     #
     # @yield [Object] the model to be returned
     #
     # @return [Finder] the finder itself
-    def after(event, &block)
+    def on(event, &block)
       tap { event_registry.register(event, &block) }
     end
 

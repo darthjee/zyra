@@ -79,13 +79,13 @@ describe Zyra::FinderCreator do
       end
     end
 
-    context 'when there is an event handler' do
+    context 'when there is an event handler on found' do
       let(:name) { 'new_name' }
 
       before do
         new_name = name
 
-        finder.after(:found) do |model|
+        finder.on(:found) do |model|
           model.update(name: new_name)
         end
       end
@@ -98,9 +98,135 @@ describe Zyra::FinderCreator do
             .to change { user.reload.name }
             .to(name)
         end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .not_to change(model_class, :count)
+        end
       end
 
       context 'when the model is not found' do
+        it 'does not run the event after the model was found' do
+          expect(finder.find_or_create(attributes).name)
+            .not_to eq(name)
+        end
+
+        it do
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
+        end
+      end
+    end
+
+    context 'when there is an event handler on build' do
+      let(:name) { 'new_name' }
+
+      before do
+        new_name = name
+
+        finder.on(:build) do |model|
+          model.name = new_name
+        end
+      end
+
+      context 'when the model is found' do
+        let!(:user) { create(:user, **attributes) }
+
+        it 'does not run the event after the model was found' do
+          expect { finder.find_or_create(attributes) }
+            .not_to change { user.reload.name }
+        end
+      end
+
+      context 'when the model is not found' do
+        it 'runs the event after the model was build' do
+          expect(finder.find_or_create(attributes).reload.name)
+            .to eq(name)
+        end
+
+        it do
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
+        end
+      end
+    end
+
+    context 'when there is an event handler on create' do
+      let(:name) { 'new_name' }
+
+      before do
+        new_name = name
+
+        finder.on(:create) do |model|
+          model.name = new_name
+        end
+      end
+
+      context 'when the model is found' do
+        before { create(:user, **attributes) }
+
+        it 'does not run the event after the model was found' do
+          expect(finder.find_or_create(attributes).name)
+            .not_to eq(name)
+        end
+      end
+
+      context 'when the model is not found' do
+        it 'runs the event after the model was created' do
+          expect(finder.find_or_create(attributes).name)
+            .to eq(name)
+        end
+
+        it 'does not run the event after the model was build' do
+          expect(finder.find_or_create(attributes).reload.name)
+            .not_to eq(name)
+        end
+
+        it do
+          expect(finder.find_or_create(attributes)).to be_a(model_class)
+        end
+
+        it do
+          expect { finder.find_or_create(attributes) }
+            .to change(model_class, :count)
+        end
+      end
+    end
+
+    context 'when there is an event handler on return' do
+      let(:name) { 'new_name' }
+
+      before do
+        new_name = name
+
+        finder.on(:return) do |model|
+          model.update(name: new_name)
+        end
+      end
+
+      context 'when the model is found' do
+        let!(:user) { create(:user, **attributes) }
+
+        it 'does not run the event after the model was found' do
+          expect { finder.find_or_create(attributes) }
+            .to change { user.reload.name }
+        end
+      end
+
+      context 'when the model is not found' do
+        it 'runs the event after the model was returned' do
+          expect(finder.find_or_create(attributes).reload.name)
+            .to eq(name)
+        end
+
         it do
           expect(finder.find_or_create(attributes)).to be_a(model_class)
         end
