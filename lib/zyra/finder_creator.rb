@@ -54,8 +54,6 @@ module Zyra
     #
     # Creates an instance of the registered model class
     #
-    # This behaves like {#build}, but persists the entry
-    #
     # @overload create(attributes, &block)
     #   @param attributes [Hash] attributes to be set in the model
     #   @param block [Proc] block to be ran after where more attributes
