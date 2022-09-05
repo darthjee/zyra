@@ -14,26 +14,7 @@ module Zyra
       @event_registry = event_registry
     end
 
-    # Builds an instance of the registered model class
-    #
-    # @param attributes [Hash] attributes to be set in the model
-    # @param block [Proc] block to be ran after where more attributes
-    # will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
-    def build(**attributes, &block)
-      block ||= proc {}
-
-      model_class.new(attributes).tap(&block).tap do |model|
-        event_registry.trigger(:build, model)
-      end
-    end
-
     # Creates an instance of the registered model class
-    #
-    # This behaves like {#build}, but persists the entry
     #
     # @param (see #build)
     # @yield (see #build)
@@ -60,6 +41,24 @@ module Zyra
     end
 
     protected
+
+    # @private
+    # Builds an instance of the registered model class
+    #
+    # @param attributes [Hash] attributes to be set in the model
+    # @param block [Proc] block to be ran after where more attributes
+    # will be set
+    #
+    # @yield [Object] Instance of the model class
+    #
+    # @return [Object] an instance of model class
+    def build(**attributes, &block)
+      block ||= proc {}
+
+      model_class.new(attributes).tap(&block).tap do |model|
+        event_registry.trigger(:build, model)
+      end
+    end
 
     # @method model_class
     # @api private
