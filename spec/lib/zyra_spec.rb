@@ -175,7 +175,8 @@ describe Zyra do
 
       context 'when there is no entry in the database' do
         it do
-          expect(described_class.find_or_create(key, attributes)).to be_a(model_class)
+          expect(described_class.find_or_create(key, attributes))
+            .to be_a(model_class)
         end
 
         it do
@@ -204,7 +205,8 @@ describe Zyra do
         before { create(:user) }
 
         it 'returns a new model' do
-          expect(described_class.find_or_create(key, attributes)).to be_a(model_class)
+          expect(described_class.find_or_create(key, attributes))
+            .to be_a(model_class)
         end
 
         it do
@@ -231,7 +233,27 @@ describe Zyra do
         end
       end
 
-      context 'when there is an event handler' do
+      context 'when there is an event handler and it is triggered' do
+        let(:name) { 'new_name' }
+
+        let!(:user) { create(:user, **attributes) }
+
+        before do
+          new_name = name
+
+          described_class.after(:user, :found) do |model|
+            model.update(name: new_name)
+          end
+        end
+
+        it 'runs the event after the model was found' do
+          expect { described_class.find_or_create(key, attributes) }
+            .to change { user.reload.name }
+            .to(name)
+        end
+      end
+
+      context 'when there is an event handler and it is not triggered' do
         let(:name) { 'new_name' }
 
         before do
@@ -242,25 +264,14 @@ describe Zyra do
           end
         end
 
-        context 'when the model is found' do
-          let!(:user) { create(:user, **attributes) }
-
-          it 'runs the event after the model was found' do
-            expect { described_class.find_or_create(key, attributes) }
-              .to change { user.reload.name }
-              .to(name)
-          end
+        it do
+          expect(described_class.find_or_create(key, attributes))
+            .to be_a(model_class)
         end
 
-        context 'when the model is not found' do
-          it do
-            expect(described_class.find_or_create(key, attributes)).to be_a(model_class)
-          end
-
-          it do
-            expect { described_class.find_or_create(key, attributes) }
-              .to change(model_class, :count)
-          end
+        it do
+          expect { described_class.find_or_create(key, attributes) }
+            .to change(model_class, :count)
         end
       end
     end
