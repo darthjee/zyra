@@ -71,6 +71,13 @@ describe Zyra::Registry do
       }
     end
 
+    context 'when a creator has not been registered' do
+      it do
+        expect { registry.after(key, :found) {} }
+          .to raise_error(Zyra::Exceptions::NotRegistered)
+      end
+    end
+
     context 'when a creator has been registered' do
       before do
         create(:user, **attributes)
@@ -103,6 +110,13 @@ describe Zyra::Registry do
         email: email,
         password: 'SomePassword'
       }
+    end
+
+    context 'when the model has not been registered' do
+      it do
+        expect { registry.find_or_create(key, attributes) }
+          .to raise_error(Zyra::Exceptions::NotRegistered)
+      end
     end
 
     context 'when the model has been registered' do
