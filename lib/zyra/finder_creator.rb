@@ -48,7 +48,7 @@ module Zyra
     # @yield [Object] the model to be returned
     #
     # @return [Finder] the finder itself
-    def after(event, &block)
+    def on(event, &block)
       tap { event_registry.register(event, &block) }
     end
 

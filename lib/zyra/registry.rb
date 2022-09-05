@@ -28,7 +28,7 @@ module Zyra
     # @see Zyra::Finder#find
     # @see Zyra::Creator#create
     def on(key, event, &block)
-      finder_creator_for(key).after(event, &block)
+      finder_creator_for(key).on(event, &block)
     end
 
     # Builds an instance of the registered model class

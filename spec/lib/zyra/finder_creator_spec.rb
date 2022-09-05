@@ -85,7 +85,7 @@ describe Zyra::FinderCreator do
       before do
         new_name = name
 
-        finder.after(:found) do |model|
+        finder.on(:found) do |model|
           model.update(name: new_name)
         end
       end
