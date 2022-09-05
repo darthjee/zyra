@@ -49,20 +49,6 @@ module Zyra
     # @return [Object] the model from the database
     delegate :find, to: :finder
 
-    # @method build
-    # @api public
-    #
-    # Builds an instance of the registered model class
-    #
-    # @overload build(attributes, &block)
-    #   @param attributes [Hash] attributes to be set in the model
-    #   @param block [Proc] block to be ran after where more attributes
-    #   will be set
-    #
-    # @yield [Object] Instance of the model class
-    #
-    # @return [Object] an instance of model class
-
     # @method create
     # @api public
     #
@@ -78,7 +64,7 @@ module Zyra
     # @yield [Object] Instance of the model class
     #
     # @return [Object] an instance of model class
-    delegate :build, :create, to: :builder
+    delegate :create, to: :builder
 
     # Checks if another finder creator is equal to the current
     #
