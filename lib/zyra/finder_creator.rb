@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Zyra
+  # @api private
   # Class responsible for making sure a model existis
   #
   # First, the object searchs in he database by the keys, and
@@ -14,6 +15,20 @@ module Zyra
       @keys = [keys].flatten.map(&:to_sym)
     end
 
+    # Ensures an entry exists in the database
+    #
+    # The query happens first by looking in the database
+    # for an entry using {Finder finder}
+    #
+    # The query only takes some attributes into consideration,
+    #
+    # In case no entry is found, a new one is created using all
+    # the given attributes
+    #
+    # @param attributes [Hash] expected attributes
+    #
+    # @see Zyra::Finder#find
+    # @see Zyra::Creator#create
     def find_or_create(attributes)
       find(attributes) || create(attributes)
     end
