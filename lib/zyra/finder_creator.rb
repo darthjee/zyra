@@ -38,10 +38,11 @@ module Zyra
 
     # Register a handler on a certain event
     #
-    # Possible event is +found+
+    # Possible events are +found+, +build+, +create+
+    # and +return+
     #
     # @param event [Symbol,String] event to be watched.
-    #   Current events are +found+, +build+ and +create+
+    #   Current events are +found+, +build+, +create+ and +return+
     # @param block [Proc] block to be executed when the event is called
     #
     # @yield [Object] the model to be returned
