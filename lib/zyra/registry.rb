@@ -16,7 +16,8 @@ module Zyra
     #
     # Possible events are +found+, +build+ and +create+
     #
-    # @param key [String,Symbol] key under which the {FinderCreator finder_creator}
+    # @param key [String,Symbol] key under which the
+    #   {FinderCreator finder_creator}
     #   is {Zyra::Registry#register registered}
     #
     # @param (see FinderCreator#after)
