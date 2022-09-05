@@ -9,7 +9,7 @@ module Zyra
     # @param model_class [Class] Model class to be initialized
     #   into a model
     # @param event_registry [Jace::Registry] event registry to handle events
-    def initialize(model_class, event_registry: Jace::Registry.new)
+    def initialize(model_class, event_registry:)
       @model_class = model_class
       @event_registry = event_registry
     end
