@@ -19,9 +19,8 @@ describe Zyra do
     end
 
     context 'when a creator has been registered' do
-      let!(:user) { create(:user, **attributes) }
-
       before do
+        create(:user, **attributes)
         described_class.register(model_class, find_by: :email)
       end
 
