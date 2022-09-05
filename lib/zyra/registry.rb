@@ -56,7 +56,7 @@ module Zyra
     # @return [Zyra::Creator]
     def finder_creator_for(key)
       registry[key.to_sym] ||
-        raise(Exceptions::CreatorNotRegistered)
+        raise(Exceptions::NotRegistered)
     end
 
     # @private
