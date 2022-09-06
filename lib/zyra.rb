@@ -9,6 +9,7 @@ require 'jace'
 #
 # Zyra allows creators to be registered to ease up
 # seeding
+#
 module Zyra
   autoload :VERSION, 'zyra/version'
 
@@ -19,7 +20,7 @@ module Zyra
   autoload :Registry,      'zyra/registry'
 
   class << self
-    # @method register
+    # @method register(klass, key)
     # @api public
     #
     # Register a new creator
@@ -27,15 +28,36 @@ module Zyra
     # The creator will focus on one class and be registered under a
     # symbol key
     #
+    # @param klass [Class] Model class to be used by the creator
+    #
     # @overload register(klass)
     #   When the key is not provided, it is infered from the class name
-    #   @param klass [Class] Model class to be used by the creator
     #
     # @overload register(klass, key)
     #   @param key [String,Symbol] key to be used when storyin the creator
-    #   @param klass [Class] Model class to be used by the creator
     #
     # @return [Zyra::FinderCreator] registered finder_creator
+    #
+    # @example Register models searching
+    #   registry = Zyra::Registry.new
+    #
+    #   registry.register(User, find_by: :email)
+    #   registry
+    #     .register(User, :user_by_name, find_by: :name)
+    #     .on(:return) do |user|
+    #       user.update(email: "#{user.name.gsub(/ /, '_')}@srv.com")
+    #     end
+    #
+    #   attributes = {
+    #     name: 'my name',
+    #     email: 'my_email@srv.com'
+    #   }
+    #
+    #   user = registry.find_or_create(:user, attributes)
+    #   # returns a User with name 'my_email@srv.com'
+    #
+    #   user = registry.find_or_create(:user_by_name, attributes)
+    #   # returns a User with name 'my_name@srv.com'
 
     # @method on(key, event, &block)
     # @api public
@@ -48,6 +70,72 @@ module Zyra
     # @param (see Zyra::Registry#after)
     # @yield (see Zyra::Registry#after)
     # @return [Finder] The finder registered under that key
+    #
+    # @example Adding a hook on return
+    #   Zyra.register(User, find_by: :email)
+    #   Zyra.on(:user, :return) do |user|
+    #     user.update(name: 'initial name')
+    #   end
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = Zyra.find_or_create(
+    #     :user,
+    #     email: email
+    #   )
+    #   # returns a User with name 'initial name'
+    #
+    #   user.update(name: 'some other name')
+    #
+    #   user = Zyra.find_or_create(:user, email: email)
+    #   # returns a User with name 'initial name'
+    #
+    # @example Adding a hook on found
+    #   Zyra.register(User, find_by: :email)
+    #   Zyra.on(:user, :found) do |user|
+    #     user.update(name: 'final name')
+    #   end
+    #
+    #   email = 'email@srv.com'
+    #   attributes = { email: email, name: 'initial name' }
+    #
+    #   user = Zyra.find_or_create(:user, attributes)
+    #   # returns a User with name 'initial name'
+    #
+    #   user = Zyra.find_or_create(:user, attributes)
+    #   # returns a User with name 'final name'
+    #
+    # @example Adding a hook on build
+    #   Zyra.register(User, find_by: :email)
+    #   Zyra.on(:user, :build) do |user|
+    #     user.name = 'initial name'
+    #   end
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = Zyra.find_or_create(:user, email: email)
+    #   # returns a User with name 'initial name'
+    #
+    #   user.update(name: 'some other name')
+    #
+    #   user = Zyra.find_or_create(:user, email: email)
+    #   # returns a User with name 'some other name'
+    #
+    # @example Adding a hook on create
+    #   Zyra.register(User, find_by: :email)
+    #   Zyra.on(:user, :create) do |user|
+    #     user.update(name: 'initial name')
+    #   end
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = Zyra.find_or_create(:user, email: email)
+    #   # returns a User with name 'initial name'
+    #
+    #   user.update(name: 'some other name')
+    #
+    #   user = Zyra.find_or_create(:user, email: email)
+    #   # returns a User with name 'some other name'
 
     # @method find_or_create(key, attributes = {}, &block)
     # @api public
@@ -60,6 +148,23 @@ module Zyra
     #   inserted into it
     #
     # @see .register
+    #
+    # @example Regular usage passing all attributes
+    #   Zyra.register(User, find_by: :email)
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = Zyra.find_or_create(
+    #     :user,
+    #     email: email, name: 'initial name'
+    #   )
+    #   # returns a User with name 'initial name'
+    #
+    #   user = Zyra.find_or_create(
+    #     :user,
+    #     email: email, name: 'final name'
+    #   )
+    #   # returns a User with name 'initial name'
     delegate :register, :on, :find_or_create, to: :registry
 
     # @api private
