@@ -24,6 +24,10 @@ module Zyra
     # if the model is found an event is triggered
     #
     # @param attributes [Hash] expected model attribiutes
+    # @param block [Proc] block to be ran after where
+    # more attributes will be set
+    #
+    # @yield [Object] Instance of the model class found
     #
     # @return [Object] the model from the database
     def find(attributes, &block)
