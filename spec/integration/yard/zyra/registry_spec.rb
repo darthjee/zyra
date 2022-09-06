@@ -4,89 +4,85 @@ require 'spec_helper'
 
 describe Zyra::Registry do
   describe 'yard' do
-    describe '#registry' do
-      it 'Regular usage passing all attributes' do
-        registry = Zyra::Registry.new
-        registry.register(User, find_by: :email)
+    it 'Regular usage passing all attributes' do
+      registry = Zyra::Registry.new
+      registry.register(User, find_by: :email)
 
-        email = 'email@srv.com'
+      email = 'email@srv.com'
 
-        user = registry.find_or_create(
-          :user,
-          email: email, name: 'initial name'
-        )
+      user = registry.find_or_create(
+        :user,
+        email: email, name: 'initial name'
+      )
 
-        expect(user.name).to eq('initial name')
+      expect(user.name).to eq('initial name')
 
-        user = registry.find_or_create(
-          :user,
-          email: email, name: 'final name'
-        )
+      user = registry.find_or_create(
+        :user,
+        email: email, name: 'final name'
+      )
 
-        expect(user.name).to eq('initial name')
-      end
+      expect(user.name).to eq('initial name')
     end
 
-    describe '#on' do
-      it 'Adding a hook on return' do
-        registry = Zyra::Registry.new
-        registry.register(User, find_by: :email)
-        registry.on(:user, :return) do |user|
-          user.update(name: 'initial name')
-        end
-
-        email = 'email@srv.com'
-
-        user = registry.find_or_create(
-          :user,
-          email: email
-        )
-
-        expect(user.name).to eq('initial name')
-        user.update(name: 'some other name')
-
-        user = registry.find_or_create(:user, email: email)
-
-        expect(user.name).to eq('initial name')
+    it 'Adding a hook on return' do
+      registry = Zyra::Registry.new
+      registry.register(User, find_by: :email)
+      registry.on(:user, :return) do |user|
+        user.update(name: 'initial name')
       end
 
-      it 'Adding a hook on found' do
-        registry = Zyra::Registry.new
-        registry.register(User, find_by: :email)
-        registry.on(:user, :found) do |user|
-          user.update(name: 'final name')
-        end
+      email = 'email@srv.com'
 
-        email = 'email@srv.com'
-        attributes = { email: email, name: 'initial name' }
+      user = registry.find_or_create(
+        :user,
+        email: email
+      )
 
-        user = registry.find_or_create(:user, attributes)
+      expect(user.name).to eq('initial name')
+      user.update(name: 'some other name')
 
-        expect(user.name).to eq('initial name')
+      user = registry.find_or_create(:user, email: email)
 
-        user = registry.find_or_create(:user, attributes)
+      expect(user.name).to eq('initial name')
+    end
 
-        expect(user.name).to eq('final name')
+    it 'Adding a hook on found' do
+      registry = Zyra::Registry.new
+      registry.register(User, find_by: :email)
+      registry.on(:user, :found) do |user|
+        user.update(name: 'final name')
       end
 
-      it 'Adding a hook on build' do
-        registry = Zyra::Registry.new
-        registry.register(User, find_by: :email)
-        registry.on(:user, :build) do |user|
-          user.name = 'initial name'
-        end
+      email = 'email@srv.com'
+      attributes = { email: email, name: 'initial name' }
 
-        email = 'email@srv.com'
+      user = registry.find_or_create(:user, attributes)
 
-        user = registry.find_or_create(:user, email: email)
+      expect(user.name).to eq('initial name')
 
-        expect(user.name).to eq('initial name')
-        user.update(name: 'some other name')
+      user = registry.find_or_create(:user, attributes)
 
-        user = registry.find_or_create(:user, email: email)
+      expect(user.name).to eq('final name')
+    end
 
-        expect(user.name).to eq('some other name')
+    it 'Adding a hook on build' do
+      registry = Zyra::Registry.new
+      registry.register(User, find_by: :email)
+      registry.on(:user, :build) do |user|
+        user.name = 'initial name'
       end
+
+      email = 'email@srv.com'
+
+      user = registry.find_or_create(:user, email: email)
+
+      expect(user.name).to eq('initial name')
+      user.update(name: 'some other name')
+
+      user = registry.find_or_create(:user, email: email)
+
+      expect(user.name).to eq('some other name')
     end
   end
 end

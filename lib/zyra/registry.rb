@@ -4,6 +4,84 @@ module Zyra
   # @api public
   #
   # Registry of all registered creators
+  #
+  # @example Regular usage passing all attributes
+  #   registry = Zyra::Registry.new
+  #   registry.register(User, find_by: :email)
+  #
+  #   email = 'email@srv.com'
+  #
+  #   user = registry.find_or_create(
+  #     :user,
+  #     email: email, name: 'initial name'
+  #   )
+  #
+  #   # returns a User with name 'initial name'
+  #
+  #   user = registry.find_or_create(
+  #     :user,
+  #     email: email, name: 'final name'
+  #   )
+  #
+  #   # returns a User with name 'initial name'
+  #
+  # @example Adding a hook on return
+  #   registry = Zyra::Registry.new
+  #   registry.register(User, find_by: :email)
+  #   registry.on(:user, :return) do |user|
+  #     user.update(name: 'initial name')
+  #   end
+  #
+  #   email = 'email@srv.com'
+  #
+  #   user = registry.find_or_create(
+  #     :user,
+  #     email: email
+  #   )
+  #
+  #   # returns a User with name 'initial name'
+  #
+  #   user.update(name: 'some other name')
+  #
+  #   user = registry.find_or_create(:user, email: email)
+  #
+  #   # returns a User with name 'initial name'
+  #
+  # @example Adding a hook on found
+  #   registry = Zyra::Registry.new
+  #   registry.register(User, find_by: :email)
+  #   registry.on(:user, :found) do |user|
+  #     user.update(name: 'final name')
+  #   end
+  #
+  #   email = 'email@srv.com'
+  #   attributes = { email: email, name: 'initial name' }
+  #
+  #   user = registry.find_or_create(:user, attributes)
+  #
+  #   # returns a User with name 'initial name'
+  #
+  #   user = registry.find_or_create(:user, attributes)
+  #
+  #   # returns a User with name 'final name'
+  #
+  # @example Adding a hook on build
+  #   registry = Zyra::Registry.new
+  #   registry.register(User, find_by: :email)
+  #   registry.on(:user, :build) do |user|
+  #     user.name = 'initial name'
+  #   end
+  #
+  #   email = 'email@srv.com'
+  #
+  #   user = registry.find_or_create(:user, email: email)
+  #   # returns a User with name 'initial name'
+  #
+  #   user.update(name: 'some other name')
+  #
+  #   user = registry.find_or_create(:user, email: email)
+  #
+  #   # returns a User with name 'some other name'
   class Registry
     # (see Zyra.register)
     def register(klass, key = nil, find_by:)
