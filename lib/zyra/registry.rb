@@ -23,10 +23,10 @@ module Zyra
     #   }
     #
     #   user = registry.find_or_create(:user, attributes)
-    #   expect(user.email).to eq('my_email@srv.com')
+    #   # returns a User with name 'my_email@srv.com'
     #
     #   user = registry.find_or_create(:user_by_name, attributes)
-    #   expect(user.email).to eq('my_name@srv.com')
+    #   # returns a User with name 'my_name@srv.com'
     def register(klass, key = nil, find_by:)
       key ||= klass.name.gsub(/::([A-Z])/, '_\1').downcase
 

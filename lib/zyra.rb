@@ -37,6 +37,27 @@ module Zyra
     #   @param klass [Class] Model class to be used by the creator
     #
     # @return [Zyra::FinderCreator] registered finder_creator
+    #
+    # @example Register models searching
+    #   registry = Zyra::Registry.new
+    #
+    #   registry.register(User, find_by: :email)
+    #   registry
+    #     .register(User, :user_by_name, find_by: :name)
+    #     .on(:return) do |user|
+    #       user.update(email: "#{user.name.gsub(/ /, '_')}@srv.com")
+    #     end
+    #
+    #   attributes = {
+    #     name: 'my name',
+    #     email: 'my_email@srv.com'
+    #   }
+    #
+    #   user = registry.find_or_create(:user, attributes)
+    #   # returns a User with name 'my_email@srv.com'
+    #
+    #   user = registry.find_or_create(:user_by_name, attributes)
+    #   # returns a User with name 'my_name@srv.com'
 
     # @method on(key, event, &block)
     # @api public
