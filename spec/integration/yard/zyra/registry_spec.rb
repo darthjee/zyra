@@ -84,5 +84,24 @@ describe Zyra::Registry do
 
       expect(user.name).to eq('some other name')
     end
+
+    it 'Adding a hook on create' do
+      registry = Zyra::Registry.new
+      registry.register(User, find_by: :email)
+      registry.on(:user, :create) do |user|
+        user.update(name: 'initial name')
+      end
+
+      email = 'email@srv.com'
+
+      user = registry.find_or_create(:user, email: email)
+
+      expect(user.name).to eq('initial name')
+      user.update(name: 'some other name')
+
+      user = registry.find_or_create(:user, email: email)
+
+      expect(user.name).to eq('some other name')
+    end
   end
 end
