@@ -33,7 +33,10 @@ describe Zyra::FinderCreator do
 
       context 'when a block is given' do
         it do
-          user = finder.find_or_create(attributes) { |user| user.update(name: 'new name') }
+          user = finder.find_or_create(attributes) do |u|
+            u.update(name: 'new name')
+          end
+
           expect(user.name).to eq('new name')
         end
       end

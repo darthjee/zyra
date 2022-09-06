@@ -26,6 +26,10 @@ module Zyra
     # the given attributes
     #
     # @param attributes [Hash] expected attributes
+    # @param block [Proc] block to be ran after where more attributes
+    # will be set
+    #
+    # @yield [Object] Instance of the model class
     #
     # @return [Object] An instance of model either from
     #   database or recently inserted
