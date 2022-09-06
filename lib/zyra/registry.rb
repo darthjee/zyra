@@ -6,6 +6,27 @@ module Zyra
   # Registry of all registered creators
   class Registry
     # (see Zyra.register)
+    #
+    # @example Register models searching
+    #   registry = Zyra::Registry.new
+    #
+    #   registry.register(User, find_by: :email)
+    #   registry
+    #     .register(User, :user_by_name, find_by: :name)
+    #     .on(:return) do |user|
+    #       user.update(email: "#{user.name.gsub(/ /, '_')}@srv.com")
+    #     end
+    #
+    #   attributes = {
+    #     name: 'my name',
+    #     email: 'my_email@srv.com'
+    #   }
+    #
+    #   user = registry.find_or_create(:user, attributes)
+    #   expect(user.email).to eq('my_email@srv.com')
+    #
+    #   user = registry.find_or_create(:user_by_name, attributes)
+    #   expect(user.email).to eq('my_name@srv.com')
     def register(klass, key = nil, find_by:)
       key ||= klass.name.gsub(/::([A-Z])/, '_\1').downcase
 
