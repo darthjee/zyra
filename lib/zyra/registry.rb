@@ -82,6 +82,24 @@ module Zyra
   #   user = registry.find_or_create(:user, email: email)
   #
   #   # returns a User with name 'some other name'
+  #
+  # @example Adding a hook on create
+  #   registry = Zyra::Registry.new
+  #   registry.register(User, find_by: :email)
+  #   registry.on(:user, :create) do |user|
+  #     user.update(name: 'initial name')
+  #   end
+  #
+  #   email = 'email@srv.com'
+  #
+  #   user = registry.find_or_create(:user, email: email)
+  #   # returns a User with name 'initial name'
+  #
+  #   user.update(name: 'some other name')
+  #
+  #   user = registry.find_or_create(:user, email: email)
+  #
+  #   # returns a User with name 'some other name'
   class Registry
     # (see Zyra.register)
     def register(klass, key = nil, find_by:)
