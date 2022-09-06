@@ -20,7 +20,7 @@ module Zyra
   autoload :Registry,      'zyra/registry'
 
   class << self
-    # @method register
+    # @method register(klass, key)
     # @api public
     #
     # Register a new creator
@@ -28,13 +28,13 @@ module Zyra
     # The creator will focus on one class and be registered under a
     # symbol key
     #
+    # @param klass [Class] Model class to be used by the creator
+    #
     # @overload register(klass)
     #   When the key is not provided, it is infered from the class name
-    #   @param klass [Class] Model class to be used by the creator
     #
     # @overload register(klass, key)
     #   @param key [String,Symbol] key to be used when storyin the creator
-    #   @param klass [Class] Model class to be used by the creator
     #
     # @return [Zyra::FinderCreator] registered finder_creator
     #

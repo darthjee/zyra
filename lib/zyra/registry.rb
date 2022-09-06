@@ -5,7 +5,20 @@ module Zyra
   #
   # Registry of all registered creators
   class Registry
-    # (see Zyra.register)
+    # Register a new creator
+    #
+    # The creator will focus on one class and be registered under a
+    # symbol key
+    #
+    # @param klass [Class] Model class to be used by the creator
+    #
+    # @overload register(klass)
+    #   When the key is not provided, it is infered from the class name
+    #
+    # @overload register(klass, key)
+    #   @param key [String,Symbol] key to be used when storyin the creator
+    #
+    # @return [Zyra::FinderCreator] registered finder_creator
     #
     # @example Register models searching
     #   registry = Zyra::Registry.new
