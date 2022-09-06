@@ -9,6 +9,89 @@ require 'jace'
 #
 # Zyra allows creators to be registered to ease up
 # seeding
+#
+# @example Regular usage passing all attributes
+#   Zyra.register(User, find_by: :email)
+#
+#   email = 'email@srv.com'
+#
+#   user = Zyra.find_or_create(
+#     :user,
+#     email: email, name: 'initial name'
+#   )
+#   # returns a User with name 'initial name'
+#
+#   user = Zyra.find_or_create(
+#     :user,
+#     email: email, name: 'final name'
+#   )
+#   # returns a User with name 'initial name'
+#
+# @example Adding a hook on return
+#   Zyra.register(User, find_by: :email)
+#   Zyra.on(:user, :return) do |user|
+#     user.update(name: 'initial name')
+#   end
+#
+#   email = 'email@srv.com'
+#
+#   user = Zyra.find_or_create(
+#     :user,
+#     email: email
+#   )
+#   # returns a User with name 'initial name'
+#
+#   user.update(name: 'some other name')
+#
+#   user = Zyra.find_or_create(:user, email: email)
+#   # returns a User with name 'initial name'
+#
+# @example Adding a hook on found
+#   Zyra.register(User, find_by: :email)
+#   Zyra.on(:user, :found) do |user|
+#     user.update(name: 'final name')
+#   end
+#
+#   email = 'email@srv.com'
+#   attributes = { email: email, name: 'initial name' }
+#
+#   user = Zyra.find_or_create(:user, attributes)
+#   # returns a User with name 'initial name'
+#
+#   user = Zyra.find_or_create(:user, attributes)
+#   # returns a User with name 'final name'
+#
+# @example Adding a hook on build
+#   Zyra.register(User, find_by: :email)
+#   Zyra.on(:user, :build) do |user|
+#     user.name = 'initial name'
+#   end
+#
+#   email = 'email@srv.com'
+#
+#   user = Zyra.find_or_create(:user, email: email)
+#   # returns a User with name 'initial name'
+#
+#   user.update(name: 'some other name')
+#
+#   user = Zyra.find_or_create(:user, email: email)
+#   # returns a User with name 'some other name'
+#
+# @example Adding a hook on create
+#   Zyra.register(User, find_by: :email)
+#   Zyra.on(:user, :create) do |user|
+#     user.update(name: 'initial name')
+#   end
+#
+#   email = 'email@srv.com'
+#
+#   user = Zyra.find_or_create(:user, email: email)
+#   # returns a User with name 'initial name'
+#
+#   user.update(name: 'some other name')
+#
+#   user = Zyra.find_or_create(:user, email: email)
+#   # returns a User with name 'some other name'
 module Zyra
   autoload :VERSION, 'zyra/version'
 
