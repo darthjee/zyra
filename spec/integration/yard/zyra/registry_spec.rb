@@ -4,6 +4,30 @@ require 'spec_helper'
 
 describe Zyra::Registry do
   describe 'yard' do
+    describe '#register' do
+      it 'Register models searching' do
+        registry = Zyra::Registry.new
+
+        registry.register(User, find_by: :email)
+        registry
+          .register(User, :user_by_name, find_by: :name)
+          .on(:return) do |user|
+            user.update(email: "#{user.name.gsub(/ /, '_')}@srv.com")
+          end
+
+        attributes = {
+          name: 'my name',
+          email: 'my_email@srv.com'
+        }
+
+        user = registry.find_or_create(:user, attributes)
+        expect(user.email).to eq('my_email@srv.com')
+
+        user = registry.find_or_create(:user_by_name, attributes)
+        expect(user.email).to eq('my_name@srv.com')
+      end
+    end
+
     describe '#find_or_create' do
       it 'Regular usage passing all attributes' do
         registry = Zyra::Registry.new
