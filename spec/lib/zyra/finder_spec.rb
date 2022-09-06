@@ -28,7 +28,7 @@ describe Zyra::Finder do
 
       context 'when a block is given' do
         it do
-          user = finder.find(attributes) { |user| user.name = 'other name' }
+          user = finder.find(attributes) { |u| u.name = 'other' }
           expect(user).to be_nil
         end
       end
@@ -38,7 +38,7 @@ describe Zyra::Finder do
       let!(:user) { create(:user, **attributes) }
 
       it 'runs the block' do
-        expect { finder.find(attributes) { |user| user.update(name: 'other')} }
+        expect { finder.find(attributes) { |u| u.update(name: 'other') } }
           .to change { user.reload.name }
           .to('other')
       end
