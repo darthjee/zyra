@@ -15,14 +15,12 @@ module Zyra
   #     :user,
   #     email: email, name: 'initial name'
   #   )
-  #
   #   # returns a User with name 'initial name'
   #
   #   user = registry.find_or_create(
   #     :user,
   #     email: email, name: 'final name'
   #   )
-  #
   #   # returns a User with name 'initial name'
   #
   # @example Adding a hook on return
@@ -38,13 +36,11 @@ module Zyra
   #     :user,
   #     email: email
   #   )
-  #
   #   # returns a User with name 'initial name'
   #
   #   user.update(name: 'some other name')
   #
   #   user = registry.find_or_create(:user, email: email)
-  #
   #   # returns a User with name 'initial name'
   #
   # @example Adding a hook on found
@@ -58,11 +54,9 @@ module Zyra
   #   attributes = { email: email, name: 'initial name' }
   #
   #   user = registry.find_or_create(:user, attributes)
-  #
   #   # returns a User with name 'initial name'
   #
   #   user = registry.find_or_create(:user, attributes)
-  #
   #   # returns a User with name 'final name'
   #
   # @example Adding a hook on build
@@ -80,7 +74,6 @@ module Zyra
   #   user.update(name: 'some other name')
   #
   #   user = registry.find_or_create(:user, email: email)
-  #
   #   # returns a User with name 'some other name'
   #
   # @example Adding a hook on create
@@ -98,7 +91,6 @@ module Zyra
   #   user.update(name: 'some other name')
   #
   #   user = registry.find_or_create(:user, email: email)
-  #
   #   # returns a User with name 'some other name'
   class Registry
     # (see Zyra.register)
