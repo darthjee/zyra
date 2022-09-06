@@ -26,9 +26,12 @@ module Zyra
     # @param attributes [Hash] expected model attribiutes
     #
     # @return [Object] the model from the database
-    def find(attributes)
+    def find(attributes, &block)
       model = find_by(attributes)
       return unless model
+
+      block ||= proc {}
+      model.tap(&block)
 
       event_registry.trigger(:found, model) { model }
     end
