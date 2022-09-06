@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe Zyra do
   describe 'yard' do
-    describe '.register' do
+    describe '.find_or_create' do
       it 'Regular usage passing all attributes' do
         Zyra.register(User, find_by: :email)
 

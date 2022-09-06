@@ -6,24 +6,6 @@ module Zyra
   # Registry of all registered creators
   class Registry
     # (see Zyra.register)
-    #
-    # @example Regular usage passing all attributes
-    #   registry = Zyra::Registry.new
-    #   registry.register(User, find_by: :email)
-    #
-    #   email = 'email@srv.com'
-    #
-    #   user = registry.find_or_create(
-    #     :user,
-    #     email: email, name: 'initial name'
-    #   )
-    #   # returns a User with name 'initial name'
-    #
-    #   user = registry.find_or_create(
-    #     :user,
-    #     email: email, name: 'final name'
-    #   )
-    #   # returns a User with name 'initial name'
     def register(klass, key = nil, find_by:)
       key ||= klass.name.gsub(/::([A-Z])/, '_\1').downcase
 
@@ -134,6 +116,24 @@ module Zyra
     #
     # @see #register
     # @see FinderCreator#find_or_create
+    #
+    # @example Regular usage passing all attributes
+    #   registry = Zyra::Registry.new
+    #   registry.register(User, find_by: :email)
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = registry.find_or_create(
+    #     :user,
+    #     email: email, name: 'initial name'
+    #   )
+    #   # returns a User with name 'initial name'
+    #
+    #   user = registry.find_or_create(
+    #     :user,
+    #     email: email, name: 'final name'
+    #   )
+    #   # returns a User with name 'initial name'
     def find_or_create(key, attributes = {}, &block)
       finder_creator_for(key).find_or_create(attributes, &block)
     end

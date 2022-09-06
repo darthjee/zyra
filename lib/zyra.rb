@@ -37,23 +37,6 @@ module Zyra
     #   @param klass [Class] Model class to be used by the creator
     #
     # @return [Zyra::FinderCreator] registered finder_creator
-    #
-    # @example Regular usage passing all attributes
-    #   Zyra.register(User, find_by: :email)
-    #
-    #   email = 'email@srv.com'
-    #
-    #   user = Zyra.find_or_create(
-    #     :user,
-    #     email: email, name: 'initial name'
-    #   )
-    #   # returns a User with name 'initial name'
-    #
-    #   user = Zyra.find_or_create(
-    #     :user,
-    #     email: email, name: 'final name'
-    #   )
-    #   # returns a User with name 'initial name'
 
     # @method on(key, event, &block)
     # @api public
@@ -144,6 +127,23 @@ module Zyra
     #   inserted into it
     #
     # @see .register
+    #
+    # @example Regular usage passing all attributes
+    #   Zyra.register(User, find_by: :email)
+    #
+    #   email = 'email@srv.com'
+    #
+    #   user = Zyra.find_or_create(
+    #     :user,
+    #     email: email, name: 'initial name'
+    #   )
+    #   # returns a User with name 'initial name'
+    #
+    #   user = Zyra.find_or_create(
+    #     :user,
+    #     email: email, name: 'final name'
+    #   )
+    #   # returns a User with name 'initial name'
     delegate :register, :on, :find_or_create, to: :registry
 
     # @api private
