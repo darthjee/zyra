@@ -32,13 +32,25 @@ describe Zyra::FinderCreator do
       end
 
       context 'when a block is given' do
-        it do
+        it 'runs the block' do
           user = finder.find_or_create(attributes) do |u|
             u.update(name: 'new name')
           end
 
           expect(user.name).to eq('new name')
         end
+      end
+    end
+
+    context 'when there is an entry and a block is given' do
+      before { create(:user, **attributes) }
+
+      it 'runs the block' do
+        user = finder.find_or_create(attributes) do |u|
+          u.update(name: 'new name')
+        end
+
+        expect(user.name).to eq('new name')
       end
     end
 
