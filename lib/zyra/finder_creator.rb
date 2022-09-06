@@ -26,14 +26,18 @@ module Zyra
     # the given attributes
     #
     # @param attributes [Hash] expected attributes
+    # @param block [Proc] block to be ran after where more attributes
+    # will be set
+    #
+    # @yield [Object] Instance of the model class
     #
     # @return [Object] An instance of model either from
     #   database or recently inserted
     #
     # @see Zyra::Finder#find
     # @see Zyra::Creator#create
-    def find_or_create(attributes)
-      model = find(attributes) || create(attributes)
+    def find_or_create(attributes, &block)
+      model = find(attributes, &block) || create(attributes, &block)
 
       event_registry.trigger(:return, model) { model }
     end

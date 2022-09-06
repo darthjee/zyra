@@ -25,6 +25,23 @@ describe Zyra::Finder do
       it do
         expect(finder.find(attributes)).to be_nil
       end
+
+      context 'when a block is given' do
+        it do
+          user = finder.find(attributes) { |u| u.name = 'other' }
+          expect(user).to be_nil
+        end
+      end
+    end
+
+    context 'when the model is found and a block is given' do
+      let!(:user) { create(:user, **attributes) }
+
+      it 'runs the block' do
+        expect { finder.find(attributes) { |u| u.update(name: 'other') } }
+          .to change { user.reload.name }
+          .to('other')
+      end
     end
 
     context 'when the entry is there with the same attributes' do
