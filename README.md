@@ -9,6 +9,12 @@ Zyra
 
 ![zyra](https://raw.githubusercontent.com/darthjee/zyra/master/zyra.jpg)
 
+Zyra is intented to easy the seeding stage of projects by ensuring an
+entity exists without having to reinsert it every time in the database
+
+The process is done by registering a model class, then performing
+a creation in case of missing the entry
+
 Yard Documentation
 -------------------
 [https://www.rubydoc.info/gems/zyra/0.0.2](https://www.rubydoc.info/gems/zyra/0.0.2)
@@ -30,4 +36,31 @@ Installation
 
 ```bash
   bundle install zyra
+```
+
+Usage
+-----
+
+```ruby
+  Zyra
+    .register(User, find_by: :email)
+    .on(:build) do |user|
+      user.reference = SecureRandom.hex(16)
+    end
+
+  attributes = {
+    email: 'usr@srv.com',
+    name: 'Some User',
+    password: 'pass'
+  }
+
+  user = Zyra.find_or_create(:user, attributes) do |usr|
+    usr.update(attributes)
+  end
+
+  # returns an instance of User that is persisted in the database
+  # user.email is the key as 'usr@srv.com'
+  # user.name will always be updated to 'Some User'
+  # user.password will always be updated to 'pass'
+  # user.reference will be generated in the first time, and never again regenerated
 ```
