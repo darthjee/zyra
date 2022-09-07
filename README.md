@@ -41,6 +41,10 @@ Installation
 Usage
 -----
 
+The usage is done by registering a model, adding hooks
+and calling `find_or_create` and passing a block to be executed
+after
+
 ```ruby
   Zyra
     .register(User, find_by: :email)
@@ -64,3 +68,8 @@ Usage
   # user.password will always be updated to 'pass'
   # user.reference will be generated in the first time, and never again regenerated
 ```
+
+## Hooks
+
+hooks can be registered when registering a model or after to be executed in 4
+points, `found`, `build`, `create` and `return`
