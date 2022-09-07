@@ -26,10 +26,10 @@ module Zyra
     def create(**attributes, &block)
       block ||= proc {}
 
-      model = build(**attributes).tap(&block)
+      model = build(**attributes)
 
       event_registry.trigger(:create, model) do
-        model.tap(&:save)
+        model.tap(&:save).tap(&block)
       end
     end
 
