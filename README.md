@@ -17,7 +17,7 @@ a creation in case of missing the entry
 
 Yard Documentation
 -------------------
-[https://www.rubydoc.info/gems/zyra/1.0.0](https://www.rubydoc.info/gems/zyra/1.0.0)
+[https://www.rubydoc.info/gems/zyra/1.1.0](https://www.rubydoc.info/gems/zyra/1.1.0)
 
 Installation
 ---------------
