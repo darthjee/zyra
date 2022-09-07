@@ -24,7 +24,9 @@ module Zyra
     #
     # @return [Object] an instance of model class
     def create(**attributes, &block)
-      model = build(**attributes, &block)
+      block ||= proc {}
+
+      model = build(**attributes).tap(&block)
 
       event_registry.trigger(:create, model) do
         model.tap(&:save)
@@ -39,10 +41,8 @@ module Zyra
     # @param (see #create)
     # @yield (see #create)
     # @return (see #create)
-    def build(**attributes, &block)
-      block ||= proc {}
-
-      model_class.new(attributes).tap(&block).tap do |model|
+    def build(**attributes)
+      model_class.new(attributes).tap do |model|
         event_registry.trigger(:build, model)
       end
     end
