@@ -168,7 +168,7 @@ module Zyra
     #     email: email, name: 'final name'
     #   )
     #   # returns a User with name 'initial name'
-    def find_or_create(key, attributes = {}, &block)
+    def find_or_create(key, attributes, &block)
       finder_creator_for(key).find_or_create(attributes, &block)
     end
 

@@ -20,6 +20,7 @@ RSpec/AlignLeftLetBrace:
 RSpec/DescribedClass:
   Exclude:
     - 'spec/integration/yard/**/*_spec.rb'
+    - 'spec/integration/readme/**/*_spec.rb'
 
 RSpec/ExampleLength:
   Exclude:
