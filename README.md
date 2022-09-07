@@ -73,3 +73,27 @@ after
 
 hooks can be registered when registering a model or after to be executed in 4
 points, `found`, `build`, `create` and `return`
+
+```ruby
+  Zyra
+    .register(User, find_by: :email)
+    .on(:build) do |user|
+      user.posts.build(name: 'first', content: 'some content')
+    end
+
+  Zyra.on(:user, :return) do |user|
+    user.update(reference: SecureRandom.hex(16))
+  end
+
+  attributes = {
+    email: 'usr@srv.com',
+    name: 'Some User',
+    password: 'pass'
+  }
+
+  user = Zyra.find_or_create(:user, attributes).reload
+
+  # Returns a User with email 'usr@srv.com'
+  # Creates a post for the user, only in the first time
+  # Regenerates the reference every time the code is ran
+```
