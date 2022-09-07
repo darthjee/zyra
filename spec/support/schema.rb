@@ -7,5 +7,6 @@ ActiveRecord::Schema.define do
     t.string :name
     t.string :email
     t.string :password
+    t.string :reference
   end
 end
