@@ -45,3 +45,8 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Lint/EmptyBlock: # new in 1.1
+  Enabled: true
+  Exclude:
+    - spec/**/*.rb
