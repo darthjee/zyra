@@ -3,6 +3,7 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.5
+  NewCops: enable
 
 Metrics/BlockLength:
   Exclude:
@@ -45,3 +46,8 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Lint/EmptyBlock: # new in 1.1
+  Enabled: true
+  Exclude:
+    - spec/**/*.rb
