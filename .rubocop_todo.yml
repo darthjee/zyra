@@ -12,191 +12,191 @@ RSpec/MultipleMemoizedHelpers:
   Max: 7
 
 FactoryBot/SyntaxMethods: # new in 2.7
-  Enabled: false
+  Enabled: true
 RSpec/BeEmpty: # new in 2.20
-  Enabled: false
+  Enabled: true
 RSpec/BeEq: # new in 2.9.0
-  Enabled: false
+  Enabled: true
 RSpec/BeNil: # new in 2.9.0
-  Enabled: false
+  Enabled: true
 RSpec/ChangeByZero: # new in 2.11
-  Enabled: false
+  Enabled: true
 RSpec/ContainExactly: # new in 2.19
-  Enabled: false
+  Enabled: true
 RSpec/DuplicatedMetadata: # new in 2.16
-  Enabled: false
+  Enabled: true
 RSpec/ExcessiveDocstringSpacing: # new in 2.5
-  Enabled: false
+  Enabled: true
 RSpec/IdenticalEqualityAssertion: # new in 2.4
-  Enabled: false
+  Enabled: true
 RSpec/IndexedLet: # new in 2.20
-  Enabled: false
+  Enabled: true
 RSpec/MatchArray: # new in 2.19
-  Enabled: false
+  Enabled: true
 RSpec/NoExpectationExample: # new in 2.13
-  Enabled: false
+  Enabled: true
 RSpec/PendingWithoutReason: # new in 2.16
-  Enabled: false
+  Enabled: true
 RSpec/RedundantAround: # new in 2.19
-  Enabled: false
+  Enabled: true
 RSpec/SkipBlockInsideExample: # new in 2.19
-  Enabled: false
+  Enabled: true
 RSpec/SortMetadata: # new in 2.14
-  Enabled: false
+  Enabled: true
 RSpec/SubjectDeclaration: # new in 2.5
-  Enabled: false
+  Enabled: true
 RSpec/VerifiedDoubleReference: # new in 2.10.0
-  Enabled: false
+  Enabled: true
 RSpec/Rails/AvoidSetupHook: # new in 2.4
-  Enabled: false
+  Enabled: true
 RSpec/Rails/HaveHttpStatus: # new in 2.12
-  Enabled: false
+  Enabled: true
 RSpec/Rails/InferredSpecType: # new in 2.14
-  Enabled: false
+  Enabled: true
 RSpec/Rails/MinitestAssertions: # new in 2.17
-  Enabled: false
+  Enabled: true
 RSpec/Rails/TravelAround: # new in 2.19
-  Enabled: false
+  Enabled: true
 Style/RedundantConstantBase: # new in 1.40
-  Enabled: false
+  Enabled: true
 Style/RedundantDoubleSplatHashBraces: # new in 1.41
-  Enabled: false
+  Enabled: true
 Style/RedundantEach: # new in 1.38
-  Enabled: false
+  Enabled: true
 Style/RedundantHeredocDelimiterQuotes: # new in 1.45
-  Enabled: false
+  Enabled: true
 Style/RedundantInitialize: # new in 1.27
-  Enabled: false
+  Enabled: true
 Style/RedundantLineContinuation: # new in 1.49
-  Enabled: false
+  Enabled: true
 Style/RedundantSelfAssignmentBranch: # new in 1.19
-  Enabled: false
+  Enabled: true
 Style/RedundantStringEscape: # new in 1.37
-  Enabled: false
+  Enabled: true
 Style/SelectByRegexp: # new in 1.22
-  Enabled: false
+  Enabled: true
 Style/StringChars: # new in 1.12
-  Enabled: false
+  Enabled: true
 Style/SwapValues: # new in 1.1
-  Enabled: false
+  Enabled: true
 Capybara/MatchStyle: # new in 2.17
-  Enabled: false
+  Enabled: true
 Capybara/NegationMatcher: # new in 2.14
-  Enabled: false
+  Enabled: true
 Capybara/SpecificActions: # new in 2.14
-  Enabled: false
+  Enabled: true
 Capybara/SpecificFinders: # new in 2.13
-  Enabled: false
+  Enabled: true
 Capybara/SpecificMatcher: # new in 2.12
-  Enabled: false
+  Enabled: true
 FactoryBot/AssociationStyle: # new in 2.23
-  Enabled: false
+  Enabled: true
 FactoryBot/ConsistentParenthesesStyle: # new in 2.14
-  Enabled: false
+  Enabled: true
 FactoryBot/FactoryAssociationWithStrategy: # new in 2.23
-  Enabled: false
+  Enabled: true
 FactoryBot/FactoryNameStyle: # new in 2.16
-  Enabled: false
+  Enabled: true
 FactoryBot/RedundantFactoryOption: # new in 2.23
-  Enabled: false
+  Enabled: true
 Style/FileWrite: # new in 1.24
-  Enabled: false
+  Enabled: true
 Style/HashConversion: # new in 1.10
-  Enabled: false
+  Enabled: true
 Style/HashExcept: # new in 1.7
-  Enabled: false
+  Enabled: true
 Style/IfWithBooleanLiteralBranches: # new in 1.9
-  Enabled: false
+  Enabled: true
 Style/InPatternThen: # new in 1.16
-  Enabled: false
+  Enabled: true
 Style/MagicCommentFormat: # new in 1.35
-  Enabled: false
+  Enabled: true
 Style/MapCompactWithConditionalBlock: # new in 1.30
-  Enabled: false
+  Enabled: true
 Style/MapToHash: # new in 1.24
-  Enabled: false
+  Enabled: true
 Style/MapToSet: # new in 1.42
-  Enabled: false
+  Enabled: true
 Style/MinMaxComparison: # new in 1.42
-  Enabled: false
+  Enabled: true
 Style/MultilineInPatternThen: # new in 1.16
-  Enabled: false
+  Enabled: true
 Style/NegatedIfElseCondition: # new in 1.2
-  Enabled: false
+  Enabled: true
 Style/NestedFileDirname: # new in 1.26
-  Enabled: false
+  Enabled: true
 Style/NilLambda: # new in 1.3
-  Enabled: false
+  Enabled: true
 Style/NumberedParameters: # new in 1.22
-  Enabled: false
+  Enabled: true
 Style/NumberedParametersLimit: # new in 1.22
-  Enabled: false
+  Enabled: true
 Style/ObjectThen: # new in 1.28
-  Enabled: false
+  Enabled: true
 Style/OpenStructUse: # new in 1.23
-  Enabled: false
+  Enabled: true
 Style/OperatorMethodCall: # new in 1.37
-  Enabled: false
+  Enabled: true
 Style/QuotedSymbols: # new in 1.16
-  Enabled: false
+  Enabled: true
 Style/RedundantArgument: # new in 1.4
-  Enabled: false
+  Enabled: true
 Lint/UselessRescue: # new in 1.43
-  Enabled: false
+  Enabled: true
 Lint/UselessRuby2Keywords: # new in 1.23
-  Enabled: false
+  Enabled: true
 Metrics/CollectionLiteralLength: # new in 1.47
-  Enabled: false
+  Enabled: true
 Naming/BlockForwarding: # new in 1.24
-  Enabled: false
+  Enabled: true
 Security/CompoundHash: # new in 1.28
-  Enabled: false
+  Enabled: true
 Security/IoMethods: # new in 1.22
-  Enabled: false
+  Enabled: true
 Style/ArgumentsForwarding: # new in 1.1
-  Enabled: false
+  Enabled: true
 Style/ArrayIntersect: # new in 1.40
-  Enabled: false
+  Enabled: true
 Style/CollectionCompact: # new in 1.2
-  Enabled: false
+  Enabled: true
 Style/ComparableClamp: # new in 1.44
-  Enabled: false
+  Enabled: true
 Style/ConcatArrayLiterals: # new in 1.41
-  Enabled: false
+  Enabled: true
 Style/DataInheritance: # new in 1.49
-  Enabled: false
+  Enabled: true
 Style/DirEmpty: # new in 1.48
-  Enabled: false
+  Enabled: true
 Style/DocumentDynamicEvalDefinition: # new in 1.1
-  Enabled: false
+  Enabled: true
 Style/EmptyHeredoc: # new in 1.32
-  Enabled: false
+  Enabled: true
 Style/EndlessMethod: # new in 1.8
-  Enabled: false
+  Enabled: true
 Style/EnvHome: # new in 1.29
-  Enabled: false
+  Enabled: true
 Style/ExactRegexpMatch: # new in 1.51
-  Enabled: false
+  Enabled: true
 Style/FetchEnvVar: # new in 1.28
-  Enabled: false
+  Enabled: true
 Style/FileEmpty: # new in 1.48
-  Enabled: false
+  Enabled: true
 Style/FileRead: # new in 1.24
-  Enabled: false
+  Enabled: true
 Lint/DuplicateMagicComment: # new in 1.37
-  Enabled: false
+  Enabled: true
 Lint/DuplicateMatchPattern: # new in 1.50
-  Enabled: false
+  Enabled: true
 Lint/DuplicateRegexpCharacterClassElement: # new in 1.1
-  Enabled: false
+  Enabled: true
 Lint/EmptyBlock: # new in 1.1
-  Enabled: false
+  Enabled: true
 Lint/EmptyClass: # new in 1.3
-  Enabled: false
+  Enabled: true
 Lint/EmptyInPattern: # new in 1.16
-  Enabled: false
+  Enabled: true
 Lint/IncompatibleIoSelectWithFiberScheduler: # new in 1.21
-  Enabled: false
+  Enabled: true
 Lint/LambdaWithoutLiteralBlock: # new in 1.8
   Enabled: false
 Lint/NoReturnInBeginEndBlocks: # new in 1.2
