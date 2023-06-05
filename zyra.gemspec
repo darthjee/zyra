@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage              = 'https://github.com/darthjee/zyra'
   gem.description           = 'Gem for seeding data in the database'
   gem.summary               = gem.description
-  gem.required_ruby_version = '>= 2.5.0'
+  gem.required_ruby_version = '>= 2.7.0'
 
   gem.files                 = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   gem.executables           = gem.files.grep(%r{^bin/}) { |f| File.basename(f) }
