@@ -15,6 +15,10 @@ entity exists without having to reinsert it every time in the database
 The process is done by registering a model class, then performing
 a creation in case of missing the entry
 
+Current Release: [1.1.0](https://github.com/darthjee/zyra/tree/1.1.0)
+
+[Next release](https://github.com/darthjee/zyra/compare/1.1.0...master)
+
 Yard Documentation
 -------------------
 [https://www.rubydoc.info/gems/zyra/1.1.0](https://www.rubydoc.info/gems/zyra/1.1.0)
