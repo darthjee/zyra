@@ -234,18 +234,18 @@ Layout/LineContinuationLeadingSpace: # new in 1.31
 Layout/LineContinuationSpacing: # new in 1.31
   Enabled: true
 Layout/LineEndStringConcatenationIndentation: # new in 1.18
-  Enabled: false
+  Enabled: true
 Layout/SpaceBeforeBrackets: # new in 1.7
-  Enabled: false
+  Enabled: true
 Lint/AmbiguousAssignment: # new in 1.7
-  Enabled: false
+  Enabled: true
 Lint/AmbiguousOperatorPrecedence: # new in 1.21
-  Enabled: false
+  Enabled: true
 Lint/AmbiguousRange: # new in 1.19
-  Enabled: false
+  Enabled: true
 Lint/ConstantOverwrittenInRescue: # new in 1.31
-  Enabled: false
+  Enabled: true
 Lint/DeprecatedConstants: # new in 1.8
-  Enabled: false
+  Enabled: true
 Lint/DuplicateBranch: # new in 1.3
-  Enabled: false
+  Enabled: true
