@@ -131,8 +131,8 @@ module Zyra
     #
     #   user = registry.find_or_create(:user, email: email)
     #   # returns a User with name 'some other name'
-    def on(key, event, &block)
-      finder_creator_for(key).on(event, &block)
+    def on(key, event, &)
+      finder_creator_for(key).on(event, &)
     end
 
     # Builds an instance of the registered model class
@@ -168,8 +168,8 @@ module Zyra
     #     email: email, name: 'final name'
     #   )
     #   # returns a User with name 'initial name'
-    def find_or_create(key, attributes, &block)
-      finder_creator_for(key).find_or_create(attributes, &block)
+    def find_or_create(key, attributes, &)
+      finder_creator_for(key).find_or_create(attributes, &)
     end
 
     private
