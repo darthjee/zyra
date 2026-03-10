@@ -18,18 +18,15 @@ workflows:
               only: /\d+\.\d+\.\d+/
             branches:
               only:
-                - master
+                - main
 jobs:
   test:
     docker:
-      - image: darthjee/circleci_rails_gems:1.3.0
+      - image: darthjee/circleci_rails_gems:2.1.0
         environment:
           PROJECT: zyra
     steps:
       - checkout
-      - run:
-          name: Prepare Coverage Test Report
-          command: cc-test-reporter before-build
       - run:
           name: Bundle Install
           command: bundle install
@@ -37,11 +34,11 @@ jobs:
           name: RSpec
           command: bundle exec rspec
       - run:
-          name: Coverage Test Report
-          command: cc-test-reporter after-build --exit-code $?
+          name: Upload coverage to Codacy
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov/project.lcov
   checks:
     docker:
-      - image: darthjee/circleci_rails_gems:1.3.0
+      - image: darthjee/circleci_rails_gems:2.1.0
         environment:
           PROJECT: zyra
     steps:
@@ -66,7 +63,7 @@ jobs:
           command: check_specs
   build-and-release:
     docker:
-      - image: darthjee/circleci_rails_gems:1.3.0
+      - image: darthjee/circleci_rails_gems:2.1.0
         environment:
           PROJECT: zyra
     steps:
