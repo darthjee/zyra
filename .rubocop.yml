@@ -2,7 +2,7 @@ plugins: rubocop-rspec
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.3
   NewCops: enable
 
 Metrics/BlockLength:
