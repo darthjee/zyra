@@ -1,49 +1,48 @@
-# Referência de Integração da Gem `zyra`
+# `zyra` Gem — Integration Reference
 
-> **Audiência:** este documento é voltado para desenvolvedores e para o GitHub
-> Copilot em repositórios que utilizam (ou pretendem utilizar) a gem `zyra`.
-> Ele descreve como integrar e usar a gem sem precisar inspecionar o código-fonte
-> do repositório original.
+> **Audience:** this document is intended for developers and GitHub Copilot in
+> repositories that use (or plan to use) the `zyra` gem. It describes how to
+> integrate and use the gem without having to inspect the original source code.
 
-## O que é a gem `zyra`?
+## What is `zyra`?
 
-`zyra` é uma gem Ruby para **seeding idempotente** de banco de dados em projetos
-Rails. Ela garante que determinadas entidades existam no banco sem duplicá-las a
-cada execução de `rake db:seed`.
+`zyra` is a Ruby gem for **idempotent database seeding** in Rails projects. It
+ensures that certain entities exist in the database without duplicating them on
+every `rake db:seed` run.
 
-O fluxo básico é:
+The basic flow is:
 
-1. Você **registra** um modelo e define quais atributos servem de chave de busca.
-2. Ao chamar `find_or_create`, a gem busca o registro pelas chaves fornecidas.
-3. Se o registro **não existir**, ele é criado com todos os atributos fornecidos.
-4. Se o registro **já existir**, ele é simplesmente retornado (sem duplicação).
-5. Hooks opcionais permitem executar lógica extra em cada etapa do processo.
+1. You **register** a model and define which attributes serve as lookup keys.
+2. When `find_or_create` is called, the gem searches for the record by those keys.
+3. If the record **does not exist**, it is created with all provided attributes.
+4. If the record **already exists**, it is simply returned (no duplication).
+5. Optional hooks allow extra logic to be executed at each step of the process.
 
 ---
 
-## Instalação
+## Installation
 
-### Via `Gemfile` (recomendado para aplicações Rails)
+### Via `Gemfile` (recommended for Rails applications)
 
-Adicione ao `Gemfile`:
+Add to your `Gemfile`:
 
 ```ruby
 gem 'zyra'
 ```
 
-Em seguida, instale as dependências:
+Then install the dependencies:
 
 ```bash
 bundle install
 ```
 
-### Via `gemspec` (para gems que dependem de `zyra`)
+### Via `gemspec` (for gems that depend on `zyra`)
 
 ```ruby
 spec.add_dependency 'zyra', '>= 1.2.0'
 ```
 
-### Instalação direta
+### Direct installation
 
 ```bash
 gem install zyra
@@ -51,40 +50,40 @@ gem install zyra
 
 ---
 
-## Requisitos
+## Requirements
 
-| Requisito     | Versão mínima |
-|---------------|---------------|
-| Ruby          | 2.7.0         |
-| ActiveSupport | 7.0.4         |
-| jace          | 0.1.1         |
+| Requirement   | Minimum version |
+|---------------|-----------------|
+| Ruby          | 2.7.0           |
+| ActiveSupport | 7.0.4           |
+| jace          | 0.1.1           |
 
-`zyra` é compatível com qualquer framework ORM que use a interface do
-`ActiveRecord` (ex.: Rails com ActiveRecord).
+`zyra` is compatible with any ORM framework that uses the `ActiveRecord`
+interface (e.g. Rails with ActiveRecord).
 
 ---
 
-## Configuração inicial
+## Initial setup
 
-A gem não requer arquivos de configuração, variáveis de ambiente nem
-inicializadores separados. Basta incluir no código de seeding:
+The gem requires no configuration files, environment variables, or separate
+initializers. Simply include it in the seeding code:
 
 ```ruby
 require 'zyra'
 ```
 
-Em projetos Rails a gem já é carregada automaticamente via Bundler.
+In Rails projects the gem is already loaded automatically via Bundler.
 
 ---
 
-## Uso em aplicações Rails
+## Usage in Rails applications
 
-O local recomendado para usar `zyra` é o arquivo `db/seeds.rb`.
+The recommended place to use `zyra` is `db/seeds.rb`.
 
-### Passo 1 — Registrar o modelo
+### Step 1 — Register the model
 
-Chame `Zyra.register` passando a classe do modelo e o atributo (ou lista de
-atributos) que serve de chave de busca:
+Call `Zyra.register` passing the model class and the attribute (or list of
+attributes) to use as the lookup key:
 
 ```ruby
 # db/seeds.rb
@@ -92,23 +91,23 @@ atributos) que serve de chave de busca:
 Zyra.register(User, find_by: :email)
 ```
 
-Múltiplas chaves:
+Multiple keys:
 
 ```ruby
 Zyra.register(Product, find_by: %i[sku store_id])
 ```
 
-Registrar com uma chave simbólica personalizada (útil quando o mesmo modelo
-precisa de mais de um registro):
+Register with a custom symbolic key (useful when the same model needs more than
+one registration):
 
 ```ruby
 Zyra.register(User, :admin_user, find_by: :email)
 ```
 
-> Quando a chave não é fornecida, ela é derivada automaticamente do nome da
-> classe (ex.: `User` → `:user`, `Admin::User` → `:admin_user`).
+> When no key is provided, it is automatically derived from the class name
+> (e.g. `User` → `:user`, `Admin::User` → `:admin_user`).
 
-### Passo 2 — Criar ou buscar o registro
+### Step 2 — Find or create the record
 
 ```ruby
 # db/seeds.rb
@@ -116,27 +115,27 @@ Zyra.register(User, :admin_user, find_by: :email)
 user = Zyra.find_or_create(
   :user,
   email: 'admin@example.com',
-  name:  'Administrador',
+  name:  'Administrator',
   role:  'admin'
 )
-# => instância de User persistida no banco
+# => a persisted User instance
 ```
 
-Na **primeira execução** o usuário é criado com todos os atributos.
-Nas **execuções seguintes** o usuário existente é encontrado pelo `email` e
-retornado sem alterações (a menos que hooks sejam configurados).
+On the **first run** the user is created with all provided attributes. On
+**subsequent runs** the existing user is found by `email` and returned
+unchanged (unless hooks are configured).
 
-### Passo 3 — Usar o bloco para atualizar sempre
+### Step 3 — Use the block to always update certain fields
 
-O bloco passado a `find_or_create` é executado tanto na criação quanto no
-retorno do registro encontrado, sendo útil para garantir que determinados campos
-estejam sempre atualizados:
+The block passed to `find_or_create` is executed both on creation and when an
+existing record is found, making it useful to ensure certain fields are always
+up-to-date:
 
 ```ruby
 attributes = {
   email:    'admin@example.com',
-  name:     'Administrador',
-  password: 'senha_segura'
+  name:     'Administrator',
+  password: 'secure_password'
 }
 
 Zyra.find_or_create(:user, attributes) do |user|
@@ -146,19 +145,19 @@ end
 
 ---
 
-## Hooks disponíveis
+## Available hooks
 
-Hooks são registrados com `Zyra.on(chave, evento)` (ou encadeados no retorno de
-`register`). Os quatro eventos possíveis são:
+Hooks are registered with `Zyra.on(key, event)` (or chained on the return value
+of `register`). The four possible events are:
 
-| Evento    | Quando é disparado                                      |
-|-----------|---------------------------------------------------------|
-| `:build`  | Após o objeto ser instanciado (antes de salvar)         |
-| `:create` | Após o objeto ser salvo pela primeira vez               |
-| `:found`  | Quando o objeto é encontrado no banco                   |
-| `:return` | Sempre, após `:build`/`:create`/`:found` (pós-retorno) |
+| Event     | When it fires                                             |
+|-----------|-----------------------------------------------------------|
+| `:build`  | After the object is instantiated (before saving)          |
+| `:create` | After the object is saved for the first time              |
+| `:found`  | When the object is found in the database                  |
+| `:return` | Always, after `:build`/`:create`/`:found` (post-return)   |
 
-### Exemplo: gerar token apenas na criação
+### Example: generate a token only on creation
 
 ```ruby
 Zyra.register(User, find_by: :email)
@@ -166,11 +165,11 @@ Zyra.register(User, find_by: :email)
       user.api_token = SecureRandom.hex(16)
     end
 
-Zyra.find_or_create(:user, email: 'usr@srv.com', name: 'Fulano')
-# O api_token é gerado somente na primeira vez
+Zyra.find_or_create(:user, email: 'usr@srv.com', name: 'John')
+# api_token is generated only the first time
 ```
 
-### Exemplo: forçar atualização a cada execução
+### Example: force an update on every run
 
 ```ruby
 Zyra.register(User, find_by: :email)
@@ -180,38 +179,38 @@ Zyra.on(:user, :return) do |user|
 end
 
 Zyra.find_or_create(:user, email: 'usr@srv.com')
-# last_seeded_at é atualizado em toda execução do seed
+# last_seeded_at is updated on every seed run
 ```
 
-### Exemplo: criar registros associados somente na criação
+### Example: create associated records only on first creation
 
 ```ruby
 Zyra.register(User, find_by: :email)
     .on(:build) do |user|
-      user.posts.build(title: 'Bem-vindo', body: 'Primeiro post')
+      user.posts.build(title: 'Welcome', body: 'First post')
     end
 
-Zyra.find_or_create(:user, email: 'usr@srv.com', name: 'Fulano').reload
-# O post é criado somente quando o usuário é criado pela primeira vez
+Zyra.find_or_create(:user, email: 'usr@srv.com', name: 'John').reload
+# The post is created only when the user is created for the first time
 ```
 
 ---
 
-## Exemplo completo em `db/seeds.rb`
+## Full example in `db/seeds.rb`
 
 ```ruby
 # db/seeds.rb
 
-# 1. Registrar modelos
+# 1. Register models
 Zyra.register(Role, find_by: :name)
 Zyra.register(User, find_by: :email)
     .on(:build) { |u| u.api_token = SecureRandom.hex(16) }
 
-# 2. Criar papéis
+# 2. Create roles
 admin_role = Zyra.find_or_create(:role, name: 'admin')
-user_role  = Zyra.find_or_create(:role, name: 'user')
+_user_role = Zyra.find_or_create(:role, name: 'user')
 
-# 3. Criar usuário administrador e sempre atualizar o nome
+# 3. Create the admin user and always keep the name up-to-date
 Zyra.find_or_create(
   :user,
   email: 'admin@example.com',
@@ -222,70 +221,69 @@ Zyra.find_or_create(
 end
 ```
 
-Execute com:
+Run with:
 
 ```bash
 rails db:seed
-# ou, para recriar do zero:
+# or, to start from scratch:
 rails db:reset
 ```
 
 ---
 
-## Boas práticas e convenções
+## Best practices and conventions
 
-1. **Registre modelos antes de usá-los** — idealmente no topo de `db/seeds.rb`
-   ou em um arquivo separado (`db/seeds/registrations.rb`) carregado no início.
+1. **Register models before using them** — ideally at the top of `db/seeds.rb`
+   or in a separate file (`db/seeds/registrations.rb`) loaded at the start.
 
-2. **Use `find_by` com atributos únicos e estáveis** — emails, slugs, códigos
-   internos. Evite atributos que mudam com frequência.
+2. **Use `find_by` with unique and stable attributes** — emails, slugs, internal
+   codes. Avoid attributes that change frequently.
 
-3. **Prefira o bloco para atualizações opcionais** — coloque no bloco apenas o
-   que deve ser sempre atualizado; os atributos fora do bloco são usados somente
-   na criação.
+3. **Prefer the block for optional updates** — put in the block only what must
+   always be updated; attributes outside the block are used only on creation.
 
-4. **Use hooks `:build` para dados que devem ser gerados somente uma vez** —
-   tokens, referências únicas, etc.
+4. **Use `:build` hooks for data that should be generated only once** — tokens,
+   unique references, etc.
 
-5. **Use hooks `:return` para dados que devem ser sempre atualizados** —
-   timestamps de auditoria, contadores, etc.
+5. **Use `:return` hooks for data that should always be refreshed** — audit
+   timestamps, counters, etc.
 
-6. **Um `Zyra.register` por modelo por chave** — se precisar buscar o mesmo
-   modelo por atributos diferentes, forneça uma chave simbólica distinta:
+6. **One `Zyra.register` per model per key** — if you need to look up the same
+   model by different attributes, provide a distinct symbolic key:
 
    ```ruby
    Zyra.register(User, :user_by_email, find_by: :email)
    Zyra.register(User, :user_by_name,  find_by: :name)
    ```
 
-7. **Evite `Zyra.reset`** no código de produção — esse método existe para
-   facilitar testes e limpa todos os registros configurados.
+7. **Avoid `Zyra.reset` in production code** — this method exists to facilitate
+   testing and clears all registered models.
 
 ---
 
-## Rake tasks relevantes
+## Relevant rake tasks
 
-| Comando           | Descrição                                                    |
-|-------------------|--------------------------------------------------------------|
-| `rails db:seed`   | Executa `db/seeds.rb` (use `zyra` aqui)                      |
-| `rails db:reset`  | Recria o banco e executa as seeds                            |
-| `rails db:setup`  | Cria o banco, roda as migrations e executa as seeds          |
+| Command           | Description                                              |
+|-------------------|----------------------------------------------------------|
+| `rails db:seed`   | Runs `db/seeds.rb` (use `zyra` here)                     |
+| `rails db:reset`  | Recreates the database and runs the seeds                |
+| `rails db:setup`  | Creates the database, runs migrations and seeds          |
 
 ---
 
-## Referências internas do repositório `darthjee/zyra`
+## Internal file reference for `darthjee/zyra`
 
-| Arquivo                         | Responsabilidade                                         |
+| File                            | Responsibility                                           |
 |---------------------------------|----------------------------------------------------------|
-| `lib/zyra.rb`                   | Módulo principal; expõe `register`, `on`, `find_or_create` |
-| `lib/zyra/registry.rb`          | Mantém o mapa de modelos registrados                     |
-| `lib/zyra/finder_creator.rb`    | Orquestra a busca e a criação de um registro             |
-| `lib/zyra/finder.rb`            | Realiza a busca no banco pelos atributos-chave           |
-| `lib/zyra/creator.rb`           | Instancia e persiste um novo registro                    |
-| `lib/zyra/exceptions.rb`        | Exceções da gem (`NotRegistered`, etc.)                  |
-| `lib/zyra/version.rb`           | Constante de versão (`Zyra::VERSION`)                    |
+| `lib/zyra.rb`                   | Main module; exposes `register`, `on`, `find_or_create`  |
+| `lib/zyra/registry.rb`          | Keeps the map of registered models                       |
+| `lib/zyra/finder_creator.rb`    | Orchestrates the lookup and creation of a record         |
+| `lib/zyra/finder.rb`            | Queries the database using the lookup key attributes     |
+| `lib/zyra/creator.rb`           | Instantiates and persists a new record                   |
+| `lib/zyra/exceptions.rb`        | Gem exceptions (`NotRegistered`, etc.)                   |
+| `lib/zyra/version.rb`           | Version constant (`Zyra::VERSION`)                       |
 
-Documentação YARD completa: <https://www.rubydoc.info/gems/zyra>
-(substitua pela versão instalada no projeto, ex.: `/gems/zyra/1.2.0`)
+Full YARD documentation: <https://www.rubydoc.info/gems/zyra>
+(replace with the version installed in your project, e.g. `/gems/zyra/1.2.0`)
 
-Repositório: <https://github.com/darthjee/zyra>
+Repository: <https://github.com/darthjee/zyra>
