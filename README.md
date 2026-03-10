@@ -1,10 +1,9 @@
 Zyra
 ====
-[![Code Climate](https://codeclimate.com/github/darthjee/zyra/badges/gpa.svg)](https://codeclimate.com/github/darthjee/zyra)
-[![Test Coverage](https://codeclimate.com/github/darthjee/zyra/badges/coverage.svg)](https://codeclimate.com/github/darthjee/zyra/coverage)
-[![Issue Count](https://codeclimate.com/github/darthjee/zyra/badges/issue_count.svg)](https://codeclimate.com/github/darthjee/zyra)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/darthjee/zyra/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/darthjee/zyra/tree/main)
 [![Gem Version](https://badge.fury.io/rb/zyra.svg)](https://badge.fury.io/rb/zyra)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fe2da1c4711d4774bd7c46acd578da05)](https://www.codacy.com/gh/darthjee/zyra/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=darthjee/zyra&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/fe2da1c4711d4774bd7c46acd578da05)](https://app.codacy.com/gh/darthjee/zyra/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/fe2da1c4711d4774bd7c46acd578da05)](https://app.codacy.com/gh/darthjee/zyra/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Inline docs](http://inch-ci.org/github/darthjee/zyra.svg?branch=master)](http://inch-ci.org/github/darthjee/zyra)
 
 ![zyra](https://raw.githubusercontent.com/darthjee/zyra/master/zyra.jpg)
@@ -17,7 +16,7 @@ a creation in case of missing the entry
 
 Current Release: [1.2.0](https://github.com/darthjee/zyra/tree/1.2.0)
 
-[Next release](https://github.com/darthjee/zyra/compare/1.2.0...master)
+[Next release](https://github.com/darthjee/zyra/compare/1.2.0...main)
 
 Yard Documentation
 -------------------
