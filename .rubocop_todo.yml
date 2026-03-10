@@ -31,8 +31,3 @@ Layout/TrailingEmptyLines:
 RSpec/MultipleMemoizedHelpers:
   Max: 7
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/HashSlice:
-  Exclude:
-    - 'lib/zyra/finder.rb'

@@ -79,9 +79,7 @@ module Zyra
     #
     # @return [Hash]
     def query_from(attributes)
-      attributes.symbolize_keys.select do |attribute, _value|
-        keys.include?(attribute)
-      end
+      attributes.symbolize_keys.slice(*keys)
     end
 
     # @private
