@@ -1,6 +1,6 @@
 FROM darthjee/scripts:0.6.0 as scripts
 
-FROM darthjee/ruby_331:1.1.0 as base
+FROM darthjee/rails_gems:2.1.0 as base
 
 COPY --chown=app:app ./ /home/app/app/
 
