@@ -19,15 +19,6 @@ Lint/RedundantDirGlobSort:
   Exclude:
     - 'spec/spec_helper.rb'
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, BlockForwardingName.
-# SupportedStyles: anonymous, explicit
-Naming/BlockForwarding:
-  Exclude:
-    - 'lib/zyra/finder_creator.rb'
-    - 'lib/zyra/registry.rb'
-
 # Offense count: 26
 # Configuration parameters: AllowSubject.
 RSpec/MultipleMemoizedHelpers:
