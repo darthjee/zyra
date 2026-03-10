@@ -26,4 +26,3 @@ gem 'simplecov-lcov',     '0.9.0'
 gem 'yard',               '0.9.38'
 gem 'yardstick',          '0.9.9'
 gem 'sqlite3',            '1.4.2'
-
