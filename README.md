@@ -14,13 +14,13 @@ entity exists without having to reinsert it every time in the database
 The process is done by registering a model class, then performing
 a creation in case of missing the entry
 
-**Current Release**: [1.2.0](https://github.com/darthjee/zyra/tree/1.2.0)
+**Current Release**: [1.3.0](https://github.com/darthjee/zyra/tree/1.3.0)
 
-**Next release**: [1.3.0](https://github.com/darthjee/zyra/compare/1.2.0...main)
+**Next release**: [1.4.0](https://github.com/darthjee/zyra/compare/1.3.0...main)
 
 Yard Documentation
 -------------------
-[https://www.rubydoc.info/gems/zyra/1.2.0](https://www.rubydoc.info/gems/zyra/1.2.0)
+[https://www.rubydoc.info/gems/zyra/1.3.0](https://www.rubydoc.info/gems/zyra/1.3.0)
 
 Installation
 ---------------
