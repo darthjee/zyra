@@ -39,7 +39,7 @@ bundle install
 ### Via `gemspec` (for gems that depend on `zyra`)
 
 ```ruby
-spec.add_dependency 'zyra', '>= 1.2.0'
+spec.add_dependency 'zyra', '>= 1.3.0'
 ```
 
 ### Direct installation
@@ -54,9 +54,9 @@ gem install zyra
 
 | Requirement   | Minimum version |
 |---------------|-----------------|
-| Ruby          | 2.7.0           |
-| ActiveSupport | 7.0.4           |
-| jace          | 0.1.1           |
+| Ruby          | 3.3.1           |
+| ActiveSupport | 7.2.2           |
+| jace          | 0.2.0           |
 
 `zyra` is compatible with any ORM framework that uses the `ActiveRecord`
 interface (e.g. Rails with ActiveRecord).
