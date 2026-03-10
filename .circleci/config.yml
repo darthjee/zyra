@@ -18,7 +18,7 @@ workflows:
               only: /\d+\.\d+\.\d+/
             branches:
               only:
-                - master
+                - main
 jobs:
   test:
     docker:
