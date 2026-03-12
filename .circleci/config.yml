@@ -17,8 +17,7 @@ workflows:
             tags:
               only: /\d+\.\d+\.\d+/
             branches:
-              only:
-                - main
+              ignore: /.*/
 jobs:
   test:
     docker:
