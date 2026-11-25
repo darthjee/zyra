@@ -6,9 +6,9 @@ set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 README="$ROOT/README.md"
-VERSION_FILE="$ROOT/lib/azeroth/version.rb"
+VERSION_FILE="$ROOT/lib/zyra/version.rb"
 LOCKFILE="$ROOT/Gemfile.lock"
-GEM="azeroth"
+GEM="zyra"
 
 current=$(grep -oE "VERSION = '[0-9]+\.[0-9]+\.[0-9]+'" "$VERSION_FILE" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
 IFS='.' read -r cmajor cminor cpatch <<< "$current"
@@ -46,12 +46,12 @@ sed -i '' \
 
 # README: Current Release line
 sed -i '' \
-  "s|\*\*Current Release\*\*: \[[0-9.]*\](https://github.com/darthjee/azeroth/tree/[0-9.]*)|**Current Release**: [${new_version}](https://github.com/darthjee/azeroth/tree/${new_version})|" \
+  "s|\*\*Current Release\*\*: \[[0-9.]*\](https://github.com/darthjee/zyra/tree/[0-9.]*)|**Current Release**: [${new_version}](https://github.com/darthjee/zyra/tree/${new_version})|" \
   "$README"
 
 # README: Next release line
 sed -i '' \
-  "s|\*\*Next release\*\*: \[[0-9.]*\](https://github.com/darthjee/azeroth/compare/[0-9.]*\.\.\.main)|**Next release**: [${next_release}](https://github.com/darthjee/azeroth/compare/${new_version}...main)|" \
+  "s|\*\*Next release\*\*: \[[0-9.]*\](https://github.com/darthjee/zyra/compare/[0-9.]*\.\.\.main)|**Next release**: [${next_release}](https://github.com/darthjee/zyra/compare/${new_version}...main)|" \
   "$README"
 
 # Gemfile.lock
