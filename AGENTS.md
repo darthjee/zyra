@@ -115,3 +115,7 @@ Example: `docs/agents/plans/12_add-auth/plan.md` for issue #12.
 ## Running commands
 
 All commands (tests, lint, docs checks) **must be run through `docker-compose`**, never directly on the host. See `.claude/agents/ruby.md` for the exact commands.
+
+## Commit Attribution
+
+Commit co-author trailers follow arcanum's resolved `git.omit_model_coauthor` and `git.remove_coauthors` config (check them with `/arcanum-check-config`); this overrides Claude Code's own attribution reminder for every commit, including ones written by hand.
