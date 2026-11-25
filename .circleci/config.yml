@@ -1,6 +1,5 @@
-version: 2
+version: 2.1
 workflows:
-  version: 2
   test-and-build:
     jobs:
       - test:
@@ -11,17 +10,23 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - coverage-final:
+          requires: [test]
+          filters:
+            tags:
+              only: /.*/
       - build-and-release:
-          requires: [test, checks]
+          requires: [test, checks, coverage-final]
           filters:
             tags:
               only: /\d+\.\d+\.\d+/
             branches:
-              ignore: /.*/
+              only:
+                - main
 jobs:
   test:
     docker:
-      - image: darthjee/circleci_rails_gems:2.1.0
+      - image: darthjee/circleci_ruby_3412:1.0.0
         environment:
           PROJECT: zyra
     steps:
@@ -31,13 +36,20 @@ jobs:
           command: bundle install
       - run:
           name: RSpec
-          command: bundle exec rspec
+          command: CI=true bundle exec rspec
       - run:
-          name: Upload coverage to Codacy
-          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov/project.lcov
+          name: Upload coverage to Codacy (partial)
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report --partial -r coverage/lcov/project.lcov
+  coverage-final:
+    docker:
+      - image: darthjee/circleci_ruby_3412:1.0.0
+    steps:
+      - run:
+          name: Finalize coverage on Codacy
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) final
   checks:
     docker:
-      - image: darthjee/circleci_rails_gems:2.1.0
+      - image: darthjee/circleci_ruby_3412:1.0.0
         environment:
           PROJECT: zyra
     steps:
@@ -62,7 +74,7 @@ jobs:
           command: check_specs
   build-and-release:
     docker:
-      - image: darthjee/circleci_rails_gems:2.1.0
+      - image: darthjee/circleci_ruby_3412:1.0.0
         environment:
           PROJECT: zyra
     steps:
